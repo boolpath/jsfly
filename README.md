@@ -33,7 +33,7 @@ In order to     create a piece of migratable code,
 as a            programmer,
 I want to       supply the code to be configured as migratable.
 ``` js
-    var migratableCode = jsfly.code(someCode);
+    var migratableCode = jsfly.wingify(someCode);
     
     migratableCode.run();   // It can be executed
     migratableCode.fly();   // It can be migrated to another server
@@ -45,8 +45,10 @@ as a            programmer,
 I want to       supply the code to be run autonomously.
 
 ``` js
-    var autonomousCode = jsfly.run(someCode);
+    var autonomousCode = jsfly.wingify(someCode).run();
 ```
+
+Although it is possible to explicitly fly and crash an autonomous code, there is no need to do it because the code itself is supossed to request those methods autonomously.
 
 ### b. Code's point of view: autonomous code
 
@@ -55,14 +57,14 @@ In order to     be migrated,
 as an           autonomous piece of code,
 I want to       to ask to be migrated.
 ``` js
-    var autonomousCode = jsfly.run(function(jsfly) {
+    var autonomousCode = jsfly.wingify(function (jsfly) {
         // Request a runway for takeoff with the destination info
-        jsfly.runway(targetAirportInfo, function(authorized, authKey) {
+        jsfly.runway(targetAirportInfo, function (authorized, authKey) {
             if(authorized) { 
                 jsfly.fly(authKey);     // Request migration
             }
         });
-    });
+    }).run();
 ```
 
 2.
@@ -70,12 +72,12 @@ In order to     be migrated,
 as an           autonomous piece of code,
 I want to       to ask to be migrated.
 ``` js
-    var autonomousCode = jsfly.run(function(jsfly) {
+    var autonomousCode = jsfly.wingify(function (jsfly) {
         // Stop running the code when it reaches its life expectancy
-        setTimeout(function() {
+        setTimeout(function () {
             jsfly.crash();              // Stop running
         }, lifeSpan);
-    });
+    }).run();
 ```
 
 ### c. Module's point of view: manageable code
