@@ -1,1 +1,4 @@
-{"main":"jsfly.js"}
+{
+    "name": "JSFly",
+    "main": "jsfly.js"
+}
