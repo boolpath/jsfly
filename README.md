@@ -12,12 +12,18 @@ var jsfly = require('jsfly');
 ### Terminology
 
 Migratable code: Code that can be sent to run in another server while running.
+
 Autonomous code: Code that can request to be sent to run in another server.
 
+
 Airport: A JSFly server.
+
 Fly: Send a program to another airport.
+
 Runway: A resource and authorization needed to take off and land.
+
 Take off: Stop running a program that will fly to another airport.
+
 Land: Start running a program that comes from another airport.
 
 ### a. Programmer's point of view: migratable code
@@ -37,6 +43,7 @@ I want to       supply the code to be configured as migratable.
 In order to     run a program as autonomous code,
 as a            programmer,
 I want to       supply the code to be run autonomously.
+
 ``` js
     var autonomousCode = jsfly.run(someCode);
 ```
