@@ -11,7 +11,7 @@ var LOCAL = {
  *@method {function} - 
  */
 module.exports = {
-    
+    create: create
 };
 
 /*----------------------------------------------------------------------------*/
@@ -20,7 +20,7 @@ module.exports = {
  * @param
  * @returns
  */
-function () {
+function create() {
     
 }
 
