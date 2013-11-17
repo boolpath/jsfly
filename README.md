@@ -9,22 +9,19 @@ var jsfly = require('jsfly');
 
 ## User Stories
 
-### Terminology
+* ### Terminology
 
-Migratable code: Code that can be sent to run in another server while running.
+   **Airport:** A JSFly server.  
+   **Runway:** A resource and authorization needed to take off and land.  
 
-Autonomous code: Code that can request to be sent to run in another server.
+   **Wingify:** To transform a piece of regular code into migratable/autonomous cod (i.e. give it wings to fly).  
+   **Migratable code:** Code that can be sent to run in another server while running.  
+   **Autonomous code:** Code that can decide and request when it wants to be sent to run in another server.  
 
-
-Airport: A JSFly server.
-
-Fly: Send a program to another airport.
-
-Runway: A resource and authorization needed to take off and land.
-
-Take off: Stop running a program that will fly to another airport.
-
-Land: Start running a program that comes from another airport.
+   **Take off:** Stop running a program that will fly to another airport.  
+   **Fly:** Travel from one airport to another airport.  
+   **Land:** Start running a program that comes from another airport.  
+ 
 
 ### a. Programmer's point of view: migratable code
 
@@ -38,7 +35,8 @@ I want to       supply the code to be configured as migratable.
     migratableCode.run();   // It can be executed
     migratableCode.fly();   // It can be migrated to another server
     migratableCode.crash(); // It can be killed
-```
+```  
+
 2. 
 In order to     run a program as autonomous code,
 as a            programmer,
@@ -48,7 +46,7 @@ I want to       supply the code to be run autonomously.
     var autonomousCode = jsfly.wingify(someCode).run();
 ```
 
-Although it is possible to explicitly fly and crash an autonomous code, there is no need to do it because the code itself is supossed to request those methods autonomously.
+Although it is possible to explicitly fly and crash an autonomous piece of code, there is no need to do it because the code itself is supossed to request those methods autonomously.
 
 ### b. Code's point of view: autonomous code
 
@@ -65,7 +63,7 @@ I want to       to ask to be migrated.
             }
         });
     }).run();
-```
+```  
 
 2.
 In order to     be migrated,
@@ -88,7 +86,7 @@ as an           airport,
 I want to       authorize a piece of code to take off.
 ``` js
     jsfly.takeOff(migratableCode);
-```
+```  
 
 2.
 In order to     start running code received from another airport,
