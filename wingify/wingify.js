@@ -25,11 +25,11 @@ module.exports = wingify;
  */
 function wingify(options, code) {
     // Validate the supplied code and options and return if invalid
-    if(!WINGIFY.validate(options, code)) { return; }
+    if (!WINGIFY.validate(options, code)) { return; }
     // Create a migratable/autonomous piece of code
     var wingified = WINGIFY.aircraft.create(options, code);
 
-    return  {run: function () {}};
+    return wingified;
 }
 
 
@@ -41,10 +41,18 @@ function wingify(options, code) {
 function validate(options, code) {
     var valid = true, codeName;
 
-    if(!code) { throw exceptions.throwNew('no function'); }
-    codeName = code.name || code.tag || options.name;
+    if (!code) {
+        throw exceptions.throwNew('no code'); 
+    } else if (typeof code !== 'function') { 
+        throw exceptions.throwNew('no function'); 
+    }
 
-    if(!codeName) { throw exceptions.throwNew('unnamed function'); }
+    codeName = code.name || code.tag || options.name;
+    if (typeof codeName !== 'string') {
+        throw exceptions.throwNew('unnamed function');  
+    } else if (!codeName || codeName === '') { 
+        throw exceptions.throwNew('unnamed function'); 
+    }
 
     return valid;
 }

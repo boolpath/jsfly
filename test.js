@@ -11,8 +11,16 @@ describe('jsfly-api', function () {
             assert.equal(typeof noSuppliedCode, 'undefined');
         });
     });
+    describe('#wingify(string)', function () {
+        it('should return undefined', function () {
+            // Only functions can be wingified, not strings
+            var noSuppliedCode = jsfly.wingify('function () {}');
+            assert.equal(typeof noSuppliedCode, 'undefined');
+        });
+    });
     describe('#wingify(unnamedFunction)', function () {
         it('should return an object with a #run() method', function () {
+            // Only named functions can be wingified
             var unnamedCode = jsfly.wingify(function () {});
             assert.equal(typeof unnameCode, 'undefined');
         });
@@ -24,13 +32,33 @@ describe('jsfly-api', function () {
             assert.equal(typeof namedCode.run, 'function');
         });
     });
-    describe('#wingify(taggedFunction)', function () {
+    describe('#wingify(noStringTaggedFunction)', function () {
+        it('should return an object with a #run() method', function () {
+            // Anonymous functions can be wingified if a 'tag' attribute is provided
+            var tagged = function () {};
+            tagged.tag = 1; // tags must be strings!
+            var taggedCode = jsfly.wingify(tagged);
+            assert.equal(typeof taggedCode, 'undefined');
+        });
+    });
+    describe('#wingify(stringTaggedFunction)', function () {
         it('should return an object with a #run() method', function () {
             var tagged = function () {};
             tagged.tag = 'myNameIs';
             var taggedCode = jsfly.wingify(tagged);
             assert.equal(typeof taggedCode, 'object');
             assert.equal(typeof taggedCode.run, 'function');
+        });
+    });
+    describe('#wingify(optionsNamedFunction)', function () {
+        it('should return an object with a #run() method', function () {
+            // Anonymous functions can passed with an options.name parameter
+            var options = {
+                name: 'myNameIs'
+            };
+            var unnamedCode = jsfly.wingify(options, function () {});
+            assert.equal(typeof unnamedCode, 'object');
+            assert.equal(typeof unnamedCode.run, 'function');
         });
     });
 });

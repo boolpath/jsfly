@@ -5,7 +5,9 @@
  */
 var EXCEPTIONS = {
     'default': ['Default', 'Unhandled exception.'],
-    'no function': ['No code', 'jsfly.wingify() was called without supplying a function.'],
+    'no code': ['No code', 'jsfly.wingify() was called without supplying a function.'],
+    'no function': ['No function', 'Parameter "code" in jsfly.wingify(code) must be a function.'],
+    'unnamed function': ['Unnamed code', 'The function supplied to jsfly.wingify(function) must be a named function or have a tag attribute.'],
     'unnamed function': ['Unnamed code', 'The function supplied to jsfly.wingify(function) must be a named function or have a tag attribute.']
 };
 
