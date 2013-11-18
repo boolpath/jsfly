@@ -14,7 +14,7 @@ var jsfly = require('jsfly');
    **Airport:** A JSFly server.  
    **Runway:** A resource and authorization needed to take off and land.  
 
-   **Wingify:** To transform a piece of regular code into migratable/autonomous cod (i.e. give it wings to fly).  
+   **Wingify:** To transform a piece of regular code into migratable/autonomous code (i.e. give it wings to fly).  
    **Migratable code:** Code that can be sent to run in another server while running.  
    **Autonomous code:** Code that can decide and request when it wants to be sent to run in another server.  
 

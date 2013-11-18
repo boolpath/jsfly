@@ -1,4 +1,6 @@
 (function parent(JSFly) {
+module.JSFly = JSFly;
+
 /*----------------------------------------------------------------------------*/
 /* NODE MODULES */
 var exceptions = require('../exceptions');
@@ -63,6 +65,8 @@ function validate(options, code) {
     } else if (typeof options.type !== 'string' || JSFly.types.indexOf(options.type) < 0) {
         throw exceptions.throwNew('wrong type');
     } 
+
+    options.name = options.name || codeName;
 
     return valid;
 }

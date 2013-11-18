@@ -5,9 +5,10 @@
  * @property {object} config - Contains the default configuration to use when wingifying code.
  * @property {object} types - An array containing the valid code types accepted by JSFly. 
  */
-var JSFly = {
+var JSFly = module.JSFly = {
+    airspace: require('./airspace'),
     airport: require('./airport'),
-    wingify: require('./wingify'),
+    wingify: {},
     config: {
         'default': {
             codeType: 'function'
@@ -15,6 +16,9 @@ var JSFly = {
     },
     types: ['function', 'module']
 };
+JSFly.airspace.setup();
+JSFly.globals = JSFly.airspace.getGlobals();
+JSFly.wingify = require('./wingify');
 
 /** MODULE INTERFACE
  * @method {function} wingify - Transforms a piece of code into migratable/autonomous code
@@ -38,17 +42,17 @@ module.exports = {
  */
 function wingify(options, code) {
     var wingified;
-     // Verify how many arguments where passed and rearraged them
+    // Verify how many arguments were passed and rearraged them
     var args = [].slice.call(arguments);
-    if(args.length === 1) { 
+    if (args.length === 1) { 
         code = options;
         options = {};
     }
-    
+
     try {
         wingified = JSFly.wingify(options, code);
     }
-    catch(e) {
+    catch (e) {
         handleExceptions(e);
     }
     return wingified;
@@ -60,7 +64,10 @@ function wingify(options, code) {
  * @returns
  */
 function handleExceptions(e) {
-   console.log('ERROR: ', e.name+' -', e.message);
+    if (e.name === 'TypeError') {
+        throw e;
+    }
+    console.log('ERROR: ', e.name+' -', e.message);
 }
 
 
@@ -70,7 +77,7 @@ function handleExceptions(e) {
  */
 function config(options) {
     var configured = true;
-    if(JSFly.types.indexOf(options.codeType)) {
+    if(JSFly.types.indexOf(options.type) < 0) {
         JSFly.config['default'].codeType = options.type;
     }
     else {
