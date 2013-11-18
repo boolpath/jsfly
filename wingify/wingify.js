@@ -1,3 +1,5 @@
+(function parent(JSFly) {
+/*----------------------------------------------------------------------------*/
 /* NODE MODULES */
 var exceptions = require('../exceptions');
 /** LOCAL OBJECT 
@@ -49,10 +51,20 @@ function validate(options, code) {
 
     codeName = code.name || code.tag || options.name;
     if (typeof codeName !== 'string') {
-        throw exceptions.throwNew('unnamed function');  
-    } else if (!codeName || codeName === '') { 
+        throw exceptions.throwNew('nostring function');  
+    } else if (!codeName || codeName === '' || codeName.trim() === '') { 
         throw exceptions.throwNew('unnamed function'); 
     }
 
+    if (typeof options !== 'object') {
+        throw exceptions.throwNew('no options');
+    } else if (typeof options.type === 'undefined') {
+        options.type = JSFly.config['default'].codeType;
+    } else if (typeof options.type !== 'string' || JSFly.types.indexOf(options.type) < 0) {
+        throw exceptions.throwNew('wrong type');
+    } 
+
     return valid;
 }
+/*----------------------------------------------------------------------------*/
+})(module.parent.JSFly);
