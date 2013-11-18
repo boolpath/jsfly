@@ -1,10 +1,13 @@
+(function parent(JSFly) {
+/*----------------------------------------------------------------------------*/
 /* NODE MODULES */
 
 /** LOCAL OBJECT 
  * @property {} - 
  */
 var AIRCRAFT = {
-    
+    newFunction: newFunction,
+    newModule: newModule
 };
 
 /** MODULE INTERFACE
@@ -24,9 +27,62 @@ module.exports = {
 function create(options, code) {
     var jsplane;
 
-    jsplane = {
-        run: function () {}
-    };
+    switch (options.type) {
+    case "function":
+        jsplane = AIRCRAFT.newFunction(options, code);
+        break;
+    case "module":
+        jsplane = AIRCRAFT.newModule(options, code);
+        break;
+    default:
+        break;
+    }
+    
 
     return jsplane;
 }
+
+/** 
+ * @param
+ * @returns
+ */
+function newFunction(options, code) {
+    var stringFunction = JSFly.airspace.prependCalls(code),
+        jsFunction,
+        jsfly = {};
+    
+    try {
+        jsFunction = new Function('jsfly', 'params', functionBody(stringFunction));
+        jsFunction.tag = options.name;
+    } catch (e) {
+        throw e; //exceptions.throwNew('new function');
+    }
+
+    return {
+        run: function(params) { 
+            jsFunction.call(jsFunction, JSFly.globals, params);
+        }
+    };
+}
+
+/** 
+ * @param
+ * @returns
+ */
+function newModule(options, code) {
+    return {
+        run: function () {}
+    };
+}
+
+/** 
+ * @param
+ * @returns
+ */
+function functionBody(stringFunction) {
+    var from = stringFunction.indexOf("{") + 1, 
+        to = stringFunction.lastIndexOf("}") - 1;
+    return stringFunction.slice(from, to).trim();
+}
+/*----------------------------------------------------------------------------*/
+})(module.parent.JSFly);
