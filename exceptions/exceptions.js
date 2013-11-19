@@ -11,6 +11,8 @@ var EXCEPTIONS = {
     'no function': ['No function', 'Parameter "code" in jsfly.wingify(code) must be a function.'],
     'nostring function': ['No string code', 'The name/tag/options.name parameters supplied to jsfly.wingify(function) must be a string.'],
     'unnamed function': ['Unnamed code', 'The function supplied to jsfly.wingify(function) must be a named function or have a tag attribute.']
+
+    //'new function': ['New Function', 'jsfly.wingify() must be an object.']
 };
 
 /** MODULE INTERFACE

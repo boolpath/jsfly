@@ -3,12 +3,12 @@
 /** LOCAL OBJECT 
  * @property {} - 
  */
-var LOCAL = {
-    
+var AIRPORT = {
+    gates: []
 };
 
 /** MODULE INTERFACE
- *@method {function} - 
+ *@method {function} create - Creates a JSFly server
  */
 module.exports = {
     create: create
@@ -16,7 +16,7 @@ module.exports = {
 
 /*----------------------------------------------------------------------------*/
 
-/** 
+/** Creates a JSFly server
  * @param
  * @returns
  */

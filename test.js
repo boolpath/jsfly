@@ -18,7 +18,7 @@ describe('jsfly-api', function () {
             assert.equal(typeof noSuppliedCode, 'undefined');
         });
     });
-    describe('#wingify(unnamedFunction)', function () {
+    describe('#wingify(anonymousFunction)', function () {
         it('should return an object with a #run() method', function () {
             // Only named functions can be wingified
             var unnamedCode = jsfly.wingify(function () {});
@@ -32,17 +32,9 @@ describe('jsfly-api', function () {
             assert.equal(typeof namedCode.run, 'function');
         });
     });
-    describe('#wingify(noStringTaggedFunction)', function () {
-        it('should return an object with a #run() method', function () {
-            // Anonymous functions can be wingified if a 'tag' attribute is provided
-            var tagged = function () {};
-            tagged.tag = 1; // tags must be strings!
-            var taggedCode = jsfly.wingify(tagged);
-            assert.equal(typeof taggedCode, 'undefined');
-        });
-    });
     describe('#wingify(stringTaggedFunction)', function () {
         it('should return an object with a #run() method', function () {
+            // Anonymous functions can be wingified if a 'tag' attribute is provided
             var tagged = function () {};
             tagged.tag = 'myNameIs';
             var taggedCode = jsfly.wingify(tagged);
@@ -50,9 +42,18 @@ describe('jsfly-api', function () {
             assert.equal(typeof taggedCode.run, 'function');
         });
     });
+    describe('#wingify(noStringTaggedFunction)', function () {
+        it('should return an object with a #run() method', function () {
+            // Anonymous functions can be tagged only with string names
+            var tagged = function () {};
+            tagged.tag = 1; // tags must be strings!
+            var taggedCode = jsfly.wingify(tagged);
+            assert.equal(typeof taggedCode, 'undefined');
+        });
+    });
     describe('#wingify(optionsNamedFunction)', function () {
         it('should return an object with a #run() method', function () {
-            // Anonymous functions can passed with an options.name parameter
+            // Anonymous functions can be passed with an options.name parameter
             var options = {
                 name: 'myNameIs'
             };
