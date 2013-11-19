@@ -1,5 +1,5 @@
 /* NODE MODULES */
-var exceptions = require('../exceptions');
+var exceptions = require('../utils/exceptions');
 /** LOCAL OBJECT 
  * @property {object} calls - [Array] Contains the methods to be prepended with 'jsfly.' during preprocessing
  * @method {function} prependCalls - Prepends the global calls in the code to be wingified according to the 'calls' array

@@ -1,9 +1,8 @@
 (function parent(JSFly) {
 module.JSFly = JSFly;
-
 /*----------------------------------------------------------------------------*/
 /* NODE MODULES */
-var exceptions = require('../exceptions');
+var exceptions = require('../utils/exceptions');
 /** LOCAL OBJECT 
  * @property {} - 
  */
