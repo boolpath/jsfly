@@ -1,6 +1,6 @@
 #jsfly
 
-What is JavaScript could Fly?... Live, autonomous code migration between Node.js servers.
+What if JavaScript could Fly?... Live, autonomous code migration between Node.js servers.
 
 ## Usage
 ``` js
