@@ -6,9 +6,6 @@
  * @property {object} types - An array containing the valid code types accepted by JSFly. 
  */
 var JSFly = module.JSFly = {
-    airspace: require('./airspace'),
-    airport: require('./airport'),
-    wingify: {},
     config: {
         'default': {
             codeType: 'function'
@@ -16,6 +13,9 @@ var JSFly = module.JSFly = {
     },
     types: ['function', 'module']
 };
+
+JSFly.airport = require('./airport');
+JSFly.airspace = require('./airspace');
 JSFly.airspace.setup();
 JSFly.globals = JSFly.airspace.getGlobals();
 JSFly.wingify = require('./wingify');

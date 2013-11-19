@@ -49,14 +49,18 @@ function create(options, code) {
 function newFunction(options, code) {
     var stringFunction = JSFly.airspace.preprocess(code),
         jsFunction,
-        jsfly = {};
+        wingified = {};
     
     try {
         jsFunction = new Function('jsfly', 'params', functionBody(stringFunction));
-        jsFunction.tag = options.name;
 
-        Object.defineProperty(jsfly, 'name', { value: jsFunction.tag });
-        Object.defineProperty(jsfly, 'run', { 
+        var id = options.name + '_' + (new Date()).getTime() + (Math.floor(Math.random()*1000));
+        jsFunction.id = id;
+
+        Object.defineProperty(wingified, 'id', { value: id });
+        Object.defineProperty(wingified, 'name', { value: options.name });
+        Object.defineProperty(wingified, 'type', { value: 'function' });
+        Object.defineProperty(wingified, 'run', { 
             value: function(params) { 
                 jsFunction.call(jsFunction, JSFly.globals, params);
             } 
@@ -65,7 +69,7 @@ function newFunction(options, code) {
         throw e; //exceptions.throwNew('new function');
     }
 
-    return jsfly;
+    return wingified;
 }
 
 /** 

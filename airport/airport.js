@@ -4,8 +4,7 @@
  * @property {} - 
  */
 var AIRPORT = {
-    functions: {},
-    modules: {}
+    gates: {}
 };
 
 /** MODULE INTERFACE
@@ -13,7 +12,9 @@ var AIRPORT = {
  */
 module.exports = {
     createServer: createServer,
-    addPlane: addPlane
+    addPlane: addPlane,
+
+    gates: AIRPORT.gates
 };
 
 /*----------------------------------------------------------------------------*/
@@ -31,24 +32,12 @@ function createServer() {
  * @returns
  */
 function addPlane(wingified, options) {
-    var id = wingified.name + '_' + (new Date()).getTime(),
-        added = false;
-
-    Object.defineProperty(wingified, 'id', { value: id });
-    
-    switch (options.type) {
-    case 'function':   
-        if (!AIRPORT.functions[id]) { 
-            AIRPORT.functions[id] = wingified;
-            added = true;
-        }
-        break;
-    case 'module':
-
-        break;
-    default:
-        break;
+    var added = false;
+      
+    if (!AIRPORT.gates[wingified.id]) { 
+        AIRPORT.gates[wingified.id] = wingified;
+        added = true;
     }
-    
+
     return added;
 }

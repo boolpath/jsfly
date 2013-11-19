@@ -34,6 +34,18 @@ module.exports = {
 function getGlobals(AIRSPACE) {
     var globals = {}; 
 
+    Object.defineProperty(globals, "fly", {
+        enumerable: false,
+        configurable: false,
+        writable: false,
+        value: function () {
+            var callerID = getCaller(),
+                caller = AIRSPACE.airport.gates[callerID];
+
+            console.log(caller.name + ' wants to fly.');
+        }
+    });
+
     // setTimeout
     if (GLOBALS.redefine.indexOf('setTimeout') >= 0) {
         Object.defineProperty(globals, "setTimeout", {
@@ -48,7 +60,7 @@ function getGlobals(AIRSPACE) {
                     AIRSPACE.timeouts[caller] = [];
                 }
                 
-                theFunction.tag = caller;
+                theFunction.id = caller;
                 timeoutHandler = setTimeout.call(null, theFunction, timeout);
                 AIRSPACE.timeouts[caller].push(timeoutHandler);
                 return timeoutHandler;
@@ -91,7 +103,7 @@ function getGlobals(AIRSPACE) {
                     AIRSPACE.intervals[caller] = [];
                 }
                 
-                theFunction.tag = caller;
+                theFunction.id = caller;
                 intervalHandler = setInterval.call(null, theFunction, interval);
                 AIRSPACE.intervals[caller].push(intervalHandler);
                 return intervalHandler;
@@ -122,16 +134,16 @@ function getGlobals(AIRSPACE) {
     return globals;
 }
 
-/** Finds the caller of a function by recursively looking for a 'tag' attribute in the callers
- * @returns {string} tag - The name of top-level caller function
+/** Finds the caller of a function by recursively looking for a 'id' attribute in the callers
+ * @returns {string} id - The ID of top-level caller function
  */
 function getCaller() {
     var theCaller = arguments.callee.caller,
-        tag;
+        id;
     
-    while(!theCaller.tag) {
+    while(!theCaller.id) {
         theCaller = theCaller.caller;
     }
     
-    return tag = theCaller.tag;
+    return id = theCaller.id;
 }

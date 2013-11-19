@@ -1,3 +1,5 @@
+(function parent(JSFly) {
+/*----------------------------------------------------------------------------*/
 /* NODE MODULES */
 var exceptions = require('../utils/exceptions');
 /** LOCAL OBJECT 
@@ -7,6 +9,7 @@ var exceptions = require('../utils/exceptions');
  * @property {object} intervals - Contains the interval handlers grouped by the functions that created them
  */
 var AIRSPACE = {
+    airport: JSFly.airport,
     globals: require('./globals'),
 
     calls: [],
@@ -72,3 +75,5 @@ function prependCalls(rawFunction) {
     });
     return stringFunction;
 }
+/*----------------------------------------------------------------------------*/
+})(module.parent.JSFly);
