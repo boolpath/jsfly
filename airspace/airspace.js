@@ -39,7 +39,10 @@ module.exports = {
  * @returns
  */
 function setup(callsToPrepend) {
-    var prependCalls = callsToPrepend || AIRSPACE.globals.defaults;
+    if(callsToPrepend) {
+        AIRSPACE.globals.defaults = callsToPrepend;
+    }
+    var prependCalls = AIRSPACE.globals.prepend;
 
     prependCalls.forEach(function (call) {
         AIRSPACE.calls.push(call);
