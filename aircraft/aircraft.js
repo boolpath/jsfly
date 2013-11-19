@@ -54,15 +54,18 @@ function newFunction(options, code) {
     try {
         jsFunction = new Function('jsfly', 'params', functionBody(stringFunction));
         jsFunction.tag = options.name;
+
+        Object.defineProperty(jsfly, 'name', { value: jsFunction.tag });
+        Object.defineProperty(jsfly, 'run', { 
+            value: function(params) { 
+                jsFunction.call(jsFunction, JSFly.globals, params);
+            } 
+        });
     } catch (e) {
         throw e; //exceptions.throwNew('new function');
     }
 
-    return {
-        run: function(params) { 
-            jsFunction.call(jsFunction, JSFly.globals, params);
-        }
-    };
+    return jsfly;
 }
 
 /** 
