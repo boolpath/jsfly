@@ -51,8 +51,10 @@ function validate(options, code) {
     }
 
     codeName = code.name || code.tag || options.name;
-    if (typeof codeName !== 'string') {
-        throw exceptions.throwNew('nostring function');  
+    if (typeof codeName === 'undefined') {
+        throw exceptions.throwNew('unnamed function'); 
+    } else if (typeof codeName !== 'string') {
+        throw exceptions.throwNew('nostring function');
     } else if (!codeName || codeName === '' || codeName.trim() === '') { 
         throw exceptions.throwNew('unnamed function'); 
     }

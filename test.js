@@ -19,8 +19,9 @@ describe('jsfly-api', function () {
         });
     });
     describe('#wingify(anonymousFunction)', function () {
-        it('should return an object with a #run() method', function () {
+        it('should return undefined', function () {
             // Only named functions can be wingified
+            console.log('anonymousFunction');
             var unnamedCode = jsfly.wingify(function () {});
             assert.equal(typeof unnameCode, 'undefined');
         });
