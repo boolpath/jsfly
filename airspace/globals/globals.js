@@ -68,7 +68,7 @@ function getGlobals(AIRSPACE) {
                     result;
 
                 if (index >= 0) {
-                    result = clearInterval.call(null, handler);
+                    result = clearTimeout.call(null, handler);
                     AIRSPACE.timeouts[caller][index] = undefined;
                 }
 
@@ -110,7 +110,7 @@ function getGlobals(AIRSPACE) {
                     result;
 
                 if (index >= 0) {
-                    result = clearTimeout.call(null, handler);
+                    result = clearInterval.call(null, handler);
                     AIRSPACE.intervals[caller][index] = undefined;
                 }
 
