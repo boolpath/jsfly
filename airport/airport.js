@@ -4,14 +4,16 @@
  * @property {} - 
  */
 var AIRPORT = {
-    gates: []
+    functions: {},
+    modules: {}
 };
 
 /** MODULE INTERFACE
  *@method {function} create - Creates a JSFly server
  */
 module.exports = {
-    create: create
+    createServer: createServer,
+    addPlane: addPlane
 };
 
 /*----------------------------------------------------------------------------*/
@@ -20,8 +22,33 @@ module.exports = {
  * @param
  * @returns
  */
-function create() {
+function createServer() {
     
 }
 
-// 
+/** Adds
+ * @param {object} wingified
+ * @returns
+ */
+function addPlane(wingified, options) {
+    var id = wingified.name + '_' + (new Date()).getTime(),
+        added = false;
+
+    Object.defineProperty(wingified, 'id', { value: id });
+    
+    switch (options.type) {
+    case 'function':   
+        if (!AIRPORT.functions[id]) { 
+            AIRPORT.functions[id] = wingified;
+            added = true;
+        }
+        break;
+    case 'module':
+
+        break;
+    default:
+        break;
+    }
+    
+    return added;
+}

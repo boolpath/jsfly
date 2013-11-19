@@ -36,7 +36,7 @@ describe('jsfly-api', function () {
         it('should return an object with a #run() method', function () {
             // Anonymous functions can be wingified if a 'tag' attribute is provided
             var tagged = function () {};
-            tagged.tag = 'myNameIs';
+            tagged.tag = 'myNameIs2';
             var taggedCode = jsfly.wingify(tagged);
             assert.equal(typeof taggedCode, 'object');
             assert.equal(typeof taggedCode.run, 'function');
@@ -55,7 +55,7 @@ describe('jsfly-api', function () {
         it('should return an object with a #run() method', function () {
             // Anonymous functions can be passed with an options.name parameter
             var options = {
-                name: 'myNameIs'
+                name: 'myNameIs3'
             };
             var unnamedCode = jsfly.wingify(options, function () {});
             assert.equal(typeof unnamedCode, 'object');

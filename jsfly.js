@@ -27,7 +27,7 @@ JSFly.wingify = require('./wingify');
 module.exports = {
     wingify: wingify,
     config: config,
-    createAirport: createAirport
+    createServer: createServer
 };
 
 
@@ -50,11 +50,15 @@ function wingify(options, code) {
     }
 
     try {
-        wingified = JSFly.wingify(options, code);
+        var wingifiedTemp = JSFly.wingify(options, code);
+        if (JSFly.airport.addPlane(wingifiedTemp, options)) {
+            wingified = wingifiedTemp;
+        }
     }
     catch (e) {
         handleExceptions(e);
     }
+
     return wingified;
 }
 
@@ -92,6 +96,6 @@ function config(options) {
  * @param {string} port - 
  * @returns 
  */
-function createAirport(host, port) {
+function createServer(host, port) {
 
 }
