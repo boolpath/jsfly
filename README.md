@@ -51,9 +51,9 @@ Although it is possible to explicitly fly and crash an autonomous piece of code,
 ### b. Code's point of view: autonomous code
 
 1.
-In order to     be migrated,
+In order to     fly to another server,
 as an           autonomous piece of code,
-I want to       to ask to be migrated.
+I want to       ask to be migrated.
 ``` js
     var autonomousCode = jsfly.wingify(function (jsfly) {
         // Request a runway for takeoff with the destination info
@@ -66,9 +66,9 @@ I want to       to ask to be migrated.
 ```  
 
 2.
-In order to     be migrated,
+In order to     stop running,
 as an           autonomous piece of code,
-I want to       to ask to be migrated.
+I want to       ask to be stopped (i.e. crash).
 ``` js
     var autonomousCode = jsfly.wingify(function (jsfly) {
         // Stop running the code when it reaches its life expectancy
