@@ -47,7 +47,7 @@ function create(options, code) {
  * @returns
  */
 function newFunction(options, code) {
-    var stringFunction = JSFly.airspace.prependCalls(code),
+    var stringFunction = JSFly.airspace.preprocess(code),
         jsFunction,
         jsfly = {};
     
