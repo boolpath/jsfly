@@ -34,7 +34,7 @@ module.exports = {
 function getGlobals(AIRSPACE) {
     var globals = {}; 
 
-    Object.defineProperty(globals, "fly", {
+    Object.defineProperty(globals, 'fly', {
         enumerable: false,
         configurable: false,
         writable: false,
@@ -48,7 +48,7 @@ function getGlobals(AIRSPACE) {
 
     // setTimeout
     if (GLOBALS.redefine.indexOf('setTimeout') >= 0) {
-        Object.defineProperty(globals, "setTimeout", {
+        Object.defineProperty(globals, 'setTimeout', {
             enumerable: false,
             configurable: false,
             writable: false,
@@ -70,7 +70,7 @@ function getGlobals(AIRSPACE) {
     
     // clearTimeout
     if (GLOBALS.redefine.indexOf('clearTimeout') >= 0) {
-        Object.defineProperty(globals, "clearTimeout", {
+        Object.defineProperty(globals, 'clearTimeout', {
             enumerable: false,
             configurable: false,
             writable: false,
@@ -91,7 +91,7 @@ function getGlobals(AIRSPACE) {
 
     // setInterval
     if (GLOBALS.redefine.indexOf('setInterval') >= 0) {
-        Object.defineProperty(globals, "setInterval", {
+        Object.defineProperty(globals, 'setInterval', {
             enumerable: false,
             configurable: false,
             writable: false,
@@ -112,7 +112,7 @@ function getGlobals(AIRSPACE) {
     }
     // clearInterval
     if (GLOBALS.redefine.indexOf('clearInterval') >= 0) {
-        Object.defineProperty(globals, "clearInterval", {
+        Object.defineProperty(globals, 'clearInterval', {
             enumerable: false,
             configurable: false,
             writable: false,

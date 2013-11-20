@@ -28,10 +28,10 @@ function create(options, code) {
     var jsplane;
 
     switch (options.type) {
-    case "function":
+    case 'function':
         jsplane = AIRCRAFT.newFunction(options, code);
         break;
-    case "module":
+    case 'module':
         jsplane = AIRCRAFT.newModule(options, code);
         break;
     default:
@@ -52,14 +52,14 @@ function newFunction(options, code) {
         wingified = {};
     
     try {
-        jsFunction = new Function('jsfly', 'params', functionBody(stringFunction));
-
         var id = options.name + '_' + (new Date()).getTime() + (Math.floor(Math.random()*1000));
+        jsFunction = new Function('jsfly', 'params', functionBody(stringFunction));
         jsFunction.id = id;
 
         Object.defineProperty(wingified, 'id', { value: id });
         Object.defineProperty(wingified, 'name', { value: options.name });
         Object.defineProperty(wingified, 'type', { value: 'function' });
+        Object.defineProperty(wingified, 'source', { value: stringFunction });
         Object.defineProperty(wingified, 'run', { 
             value: function(params) { 
                 jsFunction.call(jsFunction, JSFly.globals, params);
@@ -77,9 +77,38 @@ function newFunction(options, code) {
  * @returns
  */
 function newModule(options, code) {
-    return {
-        run: function () {}
-    };
+    var stringModule = JSFly.airspace.preprocess(code),
+        jsModule, jsReturn, jsFunction, moduleThis,
+        wingified = {};
+
+    try {
+        var id = options.name + '_' + (new Date()).getTime() + (Math.floor(Math.random()*1000));
+        jsModule = new Function('jsfly', 'params', functionBody(stringModule));
+        jsModule.id = id;
+        
+        jsReturn = jsModule.call(null, JSFly.globals, options.inits);
+        if (typeof jsReturn === 'object' && typeof jsReturn.run === 'function') {
+            jsFunction = jsReturn.run;
+        } else if (typeof jsReturn === 'function') {
+            jsFunction = jsReturn;
+        }
+        jsFunction.id = id;
+
+        Object.defineProperty(wingified, 'id', { value: id });
+        Object.defineProperty(wingified, 'name', { value: options.name });
+        Object.defineProperty(wingified, 'type', { value: 'module' });
+        Object.defineProperty(wingified, 'source', { value: stringModule });
+        Object.defineProperty(wingified, 'run', { 
+            value: function(params) { 
+                jsFunction.call(jsReturn, JSFly.globals, params);
+            } 
+        });
+
+    } catch (e) {
+        throw e; //exceptions.throwNew('new function');
+    }
+
+    return wingified;
 }
 
 /** 
@@ -87,8 +116,8 @@ function newModule(options, code) {
  * @returns
  */
 function functionBody(stringFunction) {
-    var from = stringFunction.indexOf("{") + 1, 
-        to = stringFunction.lastIndexOf("}") - 1;
+    var from = stringFunction.indexOf('{') + 1, 
+        to = stringFunction.lastIndexOf('}') - 1;
     return stringFunction.slice(from, to).trim();
 }
 /*----------------------------------------------------------------------------*/
