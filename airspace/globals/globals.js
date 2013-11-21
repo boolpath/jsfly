@@ -34,15 +34,31 @@ module.exports = {
 function getGlobals(AIRSPACE) {
     var globals = {}; 
 
+    // fly
     Object.defineProperty(globals, 'fly', {
         enumerable: false,
         configurable: false,
         writable: false,
         value: function () {
             var callerID = getCaller(),
-                caller = AIRSPACE.airport.gates[callerID];
+                caller = AIRSPACE.airport.gates[callerID],
+                callerName = caller ? caller.name : callerID.split('_')[0];
 
-            console.log(caller.name + ' wants to fly.');
+            console.log(callerName + ' wants to fly.');
+        }
+    });
+
+    // crash
+    Object.defineProperty(globals, 'crash', {
+        enumerable: false,
+        configurable: false,
+        writable: false,
+        value: function () {
+            var callerID = getCaller(),
+                caller = AIRSPACE.airport.gates[callerID],
+                callerName = caller ? caller.name : callerID.split('_')[0];
+
+            console.log(callerName + ' wants to crash.');
         }
     });
 
@@ -140,7 +156,7 @@ function getGlobals(AIRSPACE) {
 function getCaller() {
     var theCaller = arguments.callee.caller,
         id;
-    
+
     while(!theCaller.id) {
         theCaller = theCaller.caller;
     }

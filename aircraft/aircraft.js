@@ -78,7 +78,7 @@ function newFunction(options, code) {
  */
 function newModule(options, code) {
     var stringModule = JSFly.airspace.preprocess(code),
-        jsModule, jsReturn, jsFunction, moduleThis,
+        jsModule, jsReturn, jsFunction,
         wingified = {};
 
     try {
