@@ -59,6 +59,16 @@ function getGlobals(AIRSPACE) {
                 callerName = caller ? caller.name : callerID.split('_')[0];
 
             console.log(callerName + ' wants to crash.');
+
+            AIRSPACE.timeouts[callerID].forEach(function (timeout) {
+                clearTimeout(timeout);
+            });
+            AIRSPACE.timeouts[callerID] = undefined;
+            
+            AIRSPACE.intervals[callerID].forEach(function (interval) {
+                clearInterval(interval);
+            });
+            AIRSPACE.intervals[callerID] = undefined;
         }
     });
 
