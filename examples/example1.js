@@ -5,7 +5,7 @@ var jsfly = require('../jsfly');
 // to allow it to autonomously request to fly and crash
 jsfly.wingify(function myNameIs(jsfly) {
     var st1, it1;
-    
+
     // Start printing 'Hello JSFly' every 1 second
     it1 = setInterval(function () {
         console.log('Hello JSFly');
@@ -24,5 +24,5 @@ Hello JSFly
 Hello JSFly
 Hello JSFly
 Good bye JSFly
-myNameIs wants to fly
+myNameIs wants to crash
 */

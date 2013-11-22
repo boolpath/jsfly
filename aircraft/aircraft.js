@@ -63,8 +63,23 @@ function newFunction(options, code) {
         Object.defineProperty(wingified, 'run', { 
             value: function(params) { 
                 jsFunction.call(jsFunction, JSFly.globals, params);
+                return wingified;
             } 
         });
+
+        var fly = JSFly.globals.fly;
+        Object.defineProperty(wingified, 'fly', { 
+            value: function () {
+                fly(id);
+            }
+        });
+        var crash = JSFly.globals.crash;
+        Object.defineProperty(wingified, 'crash', { 
+            value: function () {
+                crash(id);
+            }
+        });
+
     } catch (e) {
         throw e; //exceptions.throwNew('new function');
     }
@@ -99,9 +114,23 @@ function newModule(options, code) {
         Object.defineProperty(wingified, 'type', { value: 'module' });
         Object.defineProperty(wingified, 'source', { value: stringModule });
         Object.defineProperty(wingified, 'run', { 
-            value: function(params) { 
+            value: function (params) { 
                 jsFunction.call(jsReturn, JSFly.globals, params);
+                return wingified;
             } 
+        });
+
+        var fly = JSFly.globals.fly;
+        Object.defineProperty(wingified, 'fly', { 
+            value: function () {
+                fly(id);
+            }
+        });
+        var crash = JSFly.globals.crash;
+        Object.defineProperty(wingified, 'crash', { 
+            value: function () {
+                crash(id);
+            }
         });
 
     } catch (e) {
@@ -110,6 +139,8 @@ function newModule(options, code) {
 
     return wingified;
 }
+
+/*----------------------------------------------------------------------------*/
 
 /** 
  * @param

@@ -39,8 +39,8 @@ function getGlobals(AIRSPACE) {
         enumerable: false,
         configurable: false,
         writable: false,
-        value: function () {
-            var callerID = getCaller(),
+        value: function (id) {
+            var callerID = id || getCaller(),
                 caller = AIRSPACE.airport.gates[callerID],
                 callerName = caller ? caller.name : callerID.split('_')[0];
 
@@ -53,8 +53,8 @@ function getGlobals(AIRSPACE) {
         enumerable: false,
         configurable: false,
         writable: false,
-        value: function () {
-            var callerID = getCaller(),
+        value: function (id) {
+            var callerID = id || getCaller(),
                 caller = AIRSPACE.airport.gates[callerID],
                 callerName = caller ? caller.name : callerID.split('_')[0];
 

@@ -53,6 +53,7 @@ function wingify(options, code) {
         var wingifiedTemp = JSFly.wingify(options, code);
         if (JSFly.airport.addPlane(wingifiedTemp, options)) {
             wingified = wingifiedTemp;
+            return wingified;
         }
     }
     catch (e) {
