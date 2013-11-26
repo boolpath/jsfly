@@ -5,7 +5,7 @@ var jsfly = require('../jsfly');
 
 // When code is meant to run autonomously, there is no need to store the return value
 // of jsfly.wingify() in a variable, since it can be run immediately **, and it is expected 
-// to call 'jsfly.crash()' when it wants to stop running. *** 
+// to call 'jsfly.crash()' autonomously when it wants to stop running. *** 
 // The 'jsfly' parameter must be declared when defining the function 
 jsfly.wingify(function crashableHelloWorld(jsfly) {
     var timeout, interval;
@@ -13,10 +13,9 @@ jsfly.wingify(function crashableHelloWorld(jsfly) {
         console.log('Hello world periodic!');
     }, 1000);
 
-    // After 3.1 seconds clear the interval and request to be crashed
+    // After 3.1 seconds request to be crashed
     timeout = setTimeout(function () {
         console.log('Hello world delayed!');
-        clearInterval(interval);
         jsfly.crash();  // *** Asks JSFly to stop running the function 'crashableHelloWorld'
     }, 3100);
 // ** Call the run() method to start running the code immediately
