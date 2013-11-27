@@ -60,15 +60,18 @@ function getGlobals(AIRSPACE) {
 
             console.log(callerName + ' wants to crash.');
 
-            AIRSPACE.timeouts[callerID].forEach(function (timeout) {
-                clearTimeout(timeout);
-            });
-            AIRSPACE.timeouts[callerID] = undefined;
-            
-            AIRSPACE.intervals[callerID].forEach(function (interval) {
-                clearInterval(interval);
-            });
-            AIRSPACE.intervals[callerID] = undefined;
+            if (AIRSPACE.timeouts[callerID] instanceof Array) {
+                AIRSPACE.timeouts[callerID].forEach(function (timeout) {
+                    clearTimeout(timeout);
+                });
+                AIRSPACE.timeouts[callerID] = undefined;
+            }
+            if (AIRSPACE.intervals[callerID] instanceof Array) {
+                AIRSPACE.intervals[callerID].forEach(function (interval) {
+                    clearInterval(interval);
+                });
+                AIRSPACE.intervals[callerID] = undefined;
+            }
         }
     });
 
@@ -79,16 +82,21 @@ function getGlobals(AIRSPACE) {
             configurable: false,
             writable: false,
             value: function (theFunction, timeout) { 
-                var caller = getCaller(),
-                    timeoutHandler;
+                var callerID = getCaller(),
+                    timeoutHandler,
+                    caller = AIRSPACE.airport.gates[callerID];
 
-                if (!(AIRSPACE.timeouts[caller] instanceof Array)) {
-                    AIRSPACE.timeouts[caller] = [];
+                if (!caller) {
+                    return;
+                }
+
+                if (!(AIRSPACE.timeouts[callerID] instanceof Array)) {
+                    AIRSPACE.timeouts[callerID] = [];
                 }
                 
-                theFunction.id = caller;
+                theFunction.id = callerID;
                 timeoutHandler = setTimeout.call(null, theFunction, timeout);
-                AIRSPACE.timeouts[caller].push(timeoutHandler);
+                AIRSPACE.timeouts[callerID].push(timeoutHandler);
                 return timeoutHandler;
             }
         });
@@ -101,13 +109,18 @@ function getGlobals(AIRSPACE) {
             configurable: false,
             writable: false,
             value: function(handler) {
-                var caller = getCaller(), 
-                    index = AIRSPACE.timeouts[caller].indexOf(handler),
+                var callerID = getCaller();
+
+                if (!AIRSPACE.timeouts[callerID]) {
+                    return;
+                }
+
+                var index = AIRSPACE.timeouts[callerID].indexOf(handler),
                     result;
 
                 if (index >= 0) {
                     result = clearTimeout.call(null, handler);
-                    AIRSPACE.timeouts[caller][index] = undefined;
+                    AIRSPACE.timeouts[callerID][index] = undefined;
                 }
 
                 return result;
@@ -122,16 +135,16 @@ function getGlobals(AIRSPACE) {
             configurable: false,
             writable: false,
             value: function(theFunction, interval) { 
-                var caller = getCaller(),
+                var callerID = getCaller(),
                     intervalHandler;
                 
-                if (!(AIRSPACE.intervals[caller] instanceof Array)) {
-                    AIRSPACE.intervals[caller] = [];
+                if (!(AIRSPACE.intervals[callerID] instanceof Array)) {
+                    AIRSPACE.intervals[callerID] = [];
                 }
                 
-                theFunction.id = caller;
+                theFunction.id = callerID;
                 intervalHandler = setInterval.call(null, theFunction, interval);
-                AIRSPACE.intervals[caller].push(intervalHandler);
+                AIRSPACE.intervals[callerID].push(intervalHandler);
                 return intervalHandler;
             }
         });
@@ -143,13 +156,18 @@ function getGlobals(AIRSPACE) {
             configurable: false,
             writable: false,
             value: function(handler) {
-                var caller = getCaller(), 
-                    index = AIRSPACE.intervals[caller].indexOf(handler),
+                var callerID = getCaller();
+
+                if (!AIRSPACE.intervals[callerID]) {
+                    return;
+                }
+
+                var index = AIRSPACE.intervals[callerID].indexOf(handler),
                     result;
 
                 if (index >= 0) {
                     result = clearInterval.call(null, handler);
-                    AIRSPACE.intervals[caller][index] = undefined;
+                    AIRSPACE.intervals[callerID][index] = undefined;
                 }
 
                 return result;
@@ -170,6 +188,6 @@ function getCaller() {
     while(!theCaller.id) {
         theCaller = theCaller.caller;
     }
-    
-    return id = theCaller.id;
+    id = theCaller.id;
+    return id;
 }
