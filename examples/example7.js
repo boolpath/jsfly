@@ -5,10 +5,20 @@ var jsfly = require('../jsfly');
 // You can also supply a function that returns an object with a 'run' method
 // This is useful if you want to expose certain functionality 
 // or if you prefer to call helper methods using this(**self) instead of using closure
-var wingified = jsfly.wingify({type: 'module'}, function myNameIs(jsfly) {
+
+// If you need to provide parameters to initialize the module before it is run,
+// you can supply them in the 'inits' property of the options argument
+var options = { 
+    type: 'module', 
+    inits: {
+        goodbye: 'Good bye world!'
+    }
+}
+
+var wingified = jsfly.wingify(options, function myNameIs(jsfly, inits) {
     var timeout, interval,
         hello = 'Hello World!',
-        goodbye = 'Good bye world!';
+        goodbye = inits.goodbye;
 
     function helloWorld() {
         interval = setInterval(function () {
