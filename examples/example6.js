@@ -2,9 +2,9 @@
 // JSFly accepts functions that follow the module pattern to organize the code and use closures
 var jsfly = require('../jsfly');
 
-// In order to use the module pattern, you must say it explicitly by providing the {type: 'module'} object,
-// or by changing the default code type using jsfly.config({type: 'module'}) before jsfly.wingify()
-// Then, you can supply a function that returns the function to be run
+// You can supply a function that returns the function to be run
+// The returned function's closure will continue to be available after being wingified
+// Note that you must specify that the code follows the module pattern using the 'type' option
 var wingified = jsfly.wingify({type: 'module'}, function myNameIs(jsfly) {
     var timeout, interval,
         hello = 'Hello World!',
