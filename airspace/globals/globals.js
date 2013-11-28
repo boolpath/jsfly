@@ -39,41 +39,51 @@ function getGlobals(AIRSPACE) {
         enumerable: false,
         configurable: false,
         writable: false,
-        value: function (id) {
-            var callerID = id || getCaller(),
-                caller = AIRSPACE.airport.gates[callerID],
-                callerName = caller ? caller.name : callerID.split('_')[0];
-
-            console.log(callerName + ' wants to fly.');
+        value: function () {
+            fly();
         }
     });
+    // The 'fly' variable is created to hold the global #fly method
+    // in order to prevent its implementation to be displayed if #toString is called
+    var fly = function () {
+        var callerID = getCaller(),
+            caller = AIRSPACE.airport.gates[callerID],
+            callerName = caller ? caller.name : callerID.split('_')[0];
+
+        console.log(callerName + ' wants to fly.');
+    }
 
     // crash
     Object.defineProperty(globals, 'crash', {
         enumerable: false,
         configurable: false,
         writable: false,
-        value: function (id) {
-            var callerID = id || getCaller(),
-                caller = AIRSPACE.airport.gates[callerID],
-                callerName = caller ? caller.name : callerID.split('_')[0];
-
-            console.log(callerName + ' wants to crash.');
-
-            if (AIRSPACE.timeouts[callerID] instanceof Array) {
-                AIRSPACE.timeouts[callerID].forEach(function (timeout) {
-                    clearTimeout(timeout);
-                });
-                AIRSPACE.timeouts[callerID] = undefined;
-            }
-            if (AIRSPACE.intervals[callerID] instanceof Array) {
-                AIRSPACE.intervals[callerID].forEach(function (interval) {
-                    clearInterval(interval);
-                });
-                AIRSPACE.intervals[callerID] = undefined;
-            }
+        value: function () {
+            crash();
         }
     });
+    // The 'crash' variable is created to hold the global #crash method
+    // in order to prevent its implementation to be displayed if #toString is called
+    var crash = function () {
+        var callerID = getCaller(),
+            caller = AIRSPACE.airport.gates[callerID],
+            callerName = caller ? caller.name : callerID.split('_')[0];
+
+        console.log(callerName + ' wants to crash.');
+
+        if (AIRSPACE.timeouts[callerID] instanceof Array) {
+            AIRSPACE.timeouts[callerID].forEach(function (timeout) {
+                clearTimeout(timeout);
+            });
+            AIRSPACE.timeouts[callerID] = undefined;
+        }
+        if (AIRSPACE.intervals[callerID] instanceof Array) {
+            AIRSPACE.intervals[callerID].forEach(function (interval) {
+                clearInterval(interval);
+            });
+            AIRSPACE.intervals[callerID] = undefined;
+        }
+    }
 
     // setTimeout
     if (GLOBALS.redefine.indexOf('setTimeout') >= 0) {
