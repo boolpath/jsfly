@@ -76,18 +76,11 @@ function newFunction(options, code) {
         });
 
         // The #fly and #crash methods are just interfaces to JSFly's global methods
-        // They use the ID property of wingified or its inner functions to determine the caller
-        var fly = JSFly.globals.fly;
-        Object.defineProperty(wingified, 'fly', { 
-            value: function () {
-                fly(id);
-            }
+        Object.defineProperty(wingified, 'fly', {
+            value: JSFly.globals.fly
         });
-        var crash = JSFly.globals.crash;
-        Object.defineProperty(wingified, 'crash', { 
-            value: function () {
-                crash(id);
-            }
+        Object.defineProperty(wingified, 'crash', {
+            value: JSFly.globals.crash
         });
 
     } catch (e) {
@@ -144,18 +137,11 @@ function newModule(options, code) {
         });
 
         // The #fly and #crash methods are just interfaces to JSFly's global methods
-        // They use the ID property of wingified or its inner functions to determine the caller
-        var fly = JSFly.globals.fly;
-        Object.defineProperty(wingified, 'fly', { 
-            value: function () {
-                fly(id);
-            }
+        Object.defineProperty(wingified, 'fly', {
+            value: JSFly.globals.fly
         });
-        var crash = JSFly.globals.crash;
-        Object.defineProperty(wingified, 'crash', { 
-            value: function () {
-                crash(id);
-            }
+        Object.defineProperty(wingified, 'crash', {
+            value: JSFly.globals.crash
         });
 
     } catch (e) {
