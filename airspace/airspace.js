@@ -71,7 +71,7 @@ function preprocess(code) {
 function prependCalls(rawFunction) {
     var stringFunction = rawFunction.toString().trim();
     AIRSPACE.calls.forEach(function(call) {
-        stringFunction = stringFunction.replace(call, 'jsfly.'+call);
+        stringFunction = stringFunction.replace(new RegExp(call, 'g'), 'jsfly.'+call);
     });
     return stringFunction;
 }
