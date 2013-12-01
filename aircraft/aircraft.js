@@ -116,7 +116,7 @@ function newModule(options, code) {
         jsModule,           // The function that will be created from the supplied (module pattern) code
         jsReturn,           // The function/object that will be returned when invoking jsModule
         jsFunction,         // The function to be run when the 'run' method is called
-        wingified = {},     // The object that will hold the code properties and #run #fly #crash methods
+        wingified,          // The object that will hold the code properties and #run #fly #crash methods
         id;                 // A unique identifier of the wingified code needed to handle global calls
 
     try {
@@ -136,6 +136,7 @@ function newModule(options, code) {
         // The same ID is also applied to the returned function since it refers to the same supplied code
         Object.defineProperty(jsFunction, 'id', { value: id });
 
+        wingified = Object.create();
         Object.defineProperty(wingified, 'id', { value: id });
         Object.defineProperty(wingified, 'name', { value: options.name });
         Object.defineProperty(wingified, 'type', { value: 'module' });
@@ -152,8 +153,16 @@ function newModule(options, code) {
         });
         // The 'run' variable is created to hold the #run method of the wingified object
         // in order to prevent its implementation to be displayed if #toString is called
-        var run = function (params) {
-            jsFunction.call(jsReturn, params);
+        // A Node domain is created to catch runtime error and prevent JSFly from crashing
+        Object.defineProperty(wingified, 'domain', { value: domain.create() });
+        var run = function (params, onError) {
+            onError = (typeof onError === 'function') ? onError : undefined;
+            wingified.domain.on('error', onError || function (err) {
+                console.log(err);
+            });
+            wingified.domain.run(function () {
+                jsFunction.call(jsReturn, JSFly.globals, params);
+            });
         }
 
         // The #fly and #crash methods are just interfaces to JSFly's global methods
