@@ -43,7 +43,7 @@ module.exports = {
  */
 function setup(callsToPrepend) {
     if(callsToPrepend) {
-        AIRSPACE.globals.defaults = callsToPrepend;
+        AIRSPACE.globals.prepend = callsToPrepend;
     }
     var prependCalls = AIRSPACE.globals.prepend;
 
