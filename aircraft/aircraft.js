@@ -1,5 +1,7 @@
 (function parent(JSFly) {
 /*----------------------------------------------------------------------------*/
+/* NODE MODULES */
+var domain = require('domain');
 
 /** LOCAL OBJECT 
  * @property {function} newFunction - Creates a wingified code from a function that returns nothing
@@ -70,10 +72,23 @@ function newFunction(options, code) {
         // The function is called with 'this' set to itself to prevent global namespace clobbering
         Object.defineProperty(wingified, 'run', { 
             value: function (params) { 
-                jsFunction.call(jsFunction, JSFly.globals, params);
+                run(params);
                 return wingified;
             } 
         });
+        // The 'run' variable is created to hold the #run method of the wingified object
+        // in order to prevent its implementation to be displayed if #toString is called
+        // A Node domain is created to catch runtime error and prevent JSFly from crashing
+        Object.defineProperty(wingified, 'domain', { value: domain.create() });
+        var run = function (params, onError) {
+            onError = (typeof onError === 'function') ? onError : undefined;
+            wingified.domain.on('error', onError || function (err) {
+                console.log(err);
+            });
+            wingified.domain.run(function () {
+                jsFunction.call(jsFunction, JSFly.globals, params);
+            });
+        }
 
         // The #fly and #crash methods are just interfaces to JSFly's global methods
         Object.defineProperty(wingified, 'fly', {
@@ -106,7 +121,7 @@ function newModule(options, code) {
 
     try {
         // A new function will be created from the preprocessed code string with the 'jsfly' parameter
-        jsModule = new Function('jsfly', 'params', functionBody(stringModule));
+        jsModule = new Function('jsfly', 'inits', functionBody(stringModule));
         id = options.name + '_' + (new Date()).getTime() + (Math.floor(Math.random()*1000));
         Object.defineProperty(jsModule, 'id', { value: id });
         
@@ -131,10 +146,15 @@ function newModule(options, code) {
         // The function is called with 'this' set to itself to prevent global namespace clobbering
         Object.defineProperty(wingified, 'run', { 
             value: function (params) { 
-                jsFunction.call(jsReturn, JSFly.globals, params);
+                run(params);
                 return wingified;
             } 
         });
+        // The 'run' variable is created to hold the #run method of the wingified object
+        // in order to prevent its implementation to be displayed if #toString is called
+        var run = function (params) {
+            jsFunction.call(jsReturn, params);
+        }
 
         // The #fly and #crash methods are just interfaces to JSFly's global methods
         Object.defineProperty(wingified, 'fly', {
