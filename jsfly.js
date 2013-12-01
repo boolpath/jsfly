@@ -1,9 +1,10 @@
-/* NODE MODULES */
-
 /** LOCAL OBJECT 
- * @property {function} wingify - The module in charge of transforming regular code into migratable/autonomous code.
- * @property {object} config - Contains the default configuration to use when wingifying code.
- * @property {object} types - An array containing the valid code types accepted by JSFly. 
+ * @property {object} config - Contains the default configuration to use when wingifying code
+ * @property {object} types - An array containing the valid code types accepted by JSFly
+ * @property {object} airport - The module in charge of creating a JSFly server and handling migration requests
+ * @property {object} airspace - The module in charge of preprocessing the code to intercept global calls
+ * @property {object} globals - A set of allowed global calls like #fly, #crash, #setTimeout, #setInterval
+ * @property {object} wingify - The module in charge of transforming regular code into migratable/autonomous code.
  */
 var JSFly = module.JSFly = {
     config: {
@@ -16,13 +17,14 @@ var JSFly = module.JSFly = {
 
 JSFly.airport = require('./airport');
 JSFly.airspace = require('./airspace');
-JSFly.airspace.setup();
+JSFly.airspace.setup(); // 
 JSFly.globals = JSFly.airspace.getGlobals();
 JSFly.wingify = require('./wingify');
 
 /** MODULE INTERFACE
  * @method {function} wingify - Transforms a piece of code into migratable/autonomous code
  * @method {function} config - Configures the default options to use when wingifying code
+ * @method {function} createServer - Creates a JSFly server for handling migration requests
  */
 module.exports = {
     wingify: wingify,
@@ -30,9 +32,7 @@ module.exports = {
     createServer: createServer
 };
 
-
 /*----------------------------------------------------------------------------*/
-
 
 /** Wingify === transforming a piece of code into migratable/autonomous code
  *          === to give it wings to fly from one server to another
@@ -42,14 +42,15 @@ module.exports = {
  */
 function wingify(options, code) {
     var wingified;
-    // Verify how many arguments were passed and rearraged them
-    var args = [].slice.call(arguments);
+    // Verify how many arguments were passed and rearrange them
+    var args = Array.slice.call(arguments);
     if (args.length === 1) { 
         code = options;
         options = {};
     }
 
     try {
+        // #wingify the provided code and add it to the system
         var wingifiedTemp = JSFly.wingify(options, code);
         if (JSFly.airport.addPlane(wingifiedTemp, options)) {
             wingified = wingifiedTemp;
@@ -57,6 +58,7 @@ function wingify(options, code) {
     } catch (e) {
         handleExceptions(e);
     } finally {
+        // If the code could not be wingified, return a dummy object
         if (typeof wingified === 'undefined') {
             wingified = wingifiedDummy;
         }
@@ -67,7 +69,7 @@ function wingify(options, code) {
 // An object to return every time a piece of code cannot be wingified
 var wingifiedDummy = {
     run: function () {
-        console.log('Supplied code could not be wingified.');
+        console.log('Supplied code could not be wingified, so it cannot run.');
     },
     fly: function () {
         console.log('Supplied code could not be wingified, so it cannot fly.');
@@ -95,10 +97,9 @@ function handleExceptions(e) {
  */
 function config(options) {
     var configured = true;
-    if(JSFly.types.indexOf(options.type) < 0) {
+    if (JSFly.types.indexOf(options.type) < 0) {
         JSFly.config['default'].codeType = options.type;
-    }
-    else {
+    } else {
         configured = false;
     }
     return configured;
