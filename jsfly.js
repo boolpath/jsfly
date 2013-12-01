@@ -53,16 +53,29 @@ function wingify(options, code) {
         var wingifiedTemp = JSFly.wingify(options, code);
         if (JSFly.airport.addPlane(wingifiedTemp, options)) {
             wingified = wingifiedTemp;
-            return wingified;
         }
-    }
-    catch (e) {
+    } catch (e) {
         handleExceptions(e);
+    } finally {
+        if (typeof wingified === 'undefined') {
+            wingified = wingifiedDummy;
+        }
+        return wingified;
     }
-
-    return wingified;
 }
 
+// An object to return every time a piece of code cannot be wingified
+var wingifiedDummy = {
+    run: function () {
+        console.log('Supplied code could not be wingified.');
+    },
+    fly: function () {
+        console.log('Supplied code could not be wingified, so it cannot fly.');
+    },
+    crash: function () {
+        console.log('Supplied code could not be wingified, so it cannot crash.');
+    }
+}
 
 /** Handles exceptions thrown when trying to wingify a piece of code
  * @param {object} e - Describes the exception thrown
