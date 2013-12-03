@@ -1,16 +1,22 @@
 (function parent(JSFly) {
 /*----------------------------------------------------------------------------*/
 /* NODE MODULES */
+var domain = require('domain');
 var exceptions = require('../utils/exceptions');
+
 /** LOCAL OBJECT 
  * @property {object} calls - [Array] Contains the methods to be prepended with 'jsfly.' during preprocessing
  * @method {function} prependCalls - Prepends the global calls in the code to be wingified according to the 'calls' array
+ * @property {object} domains - Contains Node domains to catch exceptions/errors thrown when running wingified code
  * @property {object} timeouts - Contains the timeout handlers grouped by the functions that created them
  * @property {object} intervals - Contains the interval handlers grouped by the functions that created them
  */
 var AIRSPACE = {
     airport: JSFly.airport,
     globals: require('./globals'),
+    domains: {
+        'default': domain.create()
+    },
 
     calls: [],
     prependCalls: prependCalls,
@@ -24,13 +30,16 @@ var AIRSPACE = {
  *@method {function} preprocess - Prepares the code to make it JSFly-ready by applying some transformations 
  *                                (e.g. prepending 'jsfly.' to calls like setTimeout and setInterval)
  *@method {function} getGlobals - Returns the global calls that are accessible to JSFly code
+ *@method {function} intercept - Intercepts calls to wingified code in order to catch exceptions/errors using Node domains
  */
 module.exports = {
     setup: setup,
     preprocess: preprocess,
-    getGlobals: function() { 
+    getGlobals: function () { 
         return AIRSPACE.globals.get(AIRSPACE);
-    }
+    },
+
+    intercept: intercept
 };
 
 /*----------------------------------------------------------------------------*/
@@ -42,7 +51,7 @@ module.exports = {
  * @returns
  */
 function setup(callsToPrepend) {
-    if(callsToPrepend) {
+    if (callsToPrepend) {
         AIRSPACE.globals.prepend = callsToPrepend;
     }
     var prependCalls = AIRSPACE.globals.prepend;
@@ -70,10 +79,34 @@ function preprocess(code) {
  */
 function prependCalls(rawFunction) {
     var stringFunction = rawFunction.toString().trim();
-    AIRSPACE.calls.forEach(function(call) {
+    AIRSPACE.calls.forEach(function (call) {
         stringFunction = stringFunction.replace(new RegExp(call, 'g'), 'jsfly.'+call);
     });
     return stringFunction;
 }
+
+/* Intercepts calls to wingified code in order to catch exceptions/errors using Node domains
+ * @param {function} code - The function to be intercepted when called
+ * @returns {function} - A wrapper around the supplied function
+ */
+function intercept(code) {
+    return AIRSPACE.domains['default'].intercept(code);
+}
+
+/* Error handlers for defined domains */
+AIRSPACE.domains['default'].on('error', function (err) {
+    switch (err.name) {
+        case 'ReferenceError':
+            console.log('Reference error: '+err.message);
+            break;
+        case 'TypeError':
+            console.log('Type error: '+err.message);
+            break;
+        default:
+            console.log(err);
+            break;
+    }
+});
+
 /*----------------------------------------------------------------------------*/
 })(module.parent.JSFly);
