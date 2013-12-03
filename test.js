@@ -8,14 +8,14 @@ describe('jsfly-api', function () {
     describe('#wingify()', function () {
         it('should return undefined', function () {
             var noSuppliedCode = jsfly.wingify();
-            assert.equal(typeof noSuppliedCode, 'undefined');
+            assert.equal(noSuppliedCode.canFly, false);
         });
     });
     describe('#wingify(string)', function () {
         it('should return undefined', function () {
             // Only functions can be wingified, not strings
             var noSuppliedCode = jsfly.wingify('function () {}');
-            assert.equal(typeof noSuppliedCode, 'undefined');
+            assert.equal(noSuppliedCode.canFly, false);
         });
     });
     describe('#wingify(anonymousFunction)', function () {
@@ -23,7 +23,7 @@ describe('jsfly-api', function () {
             // Only named functions can be wingified
             console.log('anonymousFunction');
             var unnamedCode = jsfly.wingify(function () {});
-            assert.equal(typeof unnameCode, 'undefined');
+            assert.equal(unnamedCode.canFly, false);
         });
     });
     describe('#wingify(namedFunction)', function () {
@@ -49,7 +49,7 @@ describe('jsfly-api', function () {
             var tagged = function () {};
             tagged.tag = 1; // tags must be strings!
             var taggedCode = jsfly.wingify(tagged);
-            assert.equal(typeof taggedCode, 'undefined');
+            assert.equal(taggedCode.canFly, false);
         });
     });
     describe('#wingify(optionsNamedFunction)', function () {

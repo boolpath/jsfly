@@ -43,7 +43,7 @@ module.exports = {
 function wingify(options, code) {
     var wingified;
     // Verify how many arguments were passed and rearrange them
-    var args = Array.slice.call(arguments);
+    var args = Array.prototype.slice.call(arguments);
     if (args.length === 1) { 
         code = options;
         options = {};
@@ -56,7 +56,7 @@ function wingify(options, code) {
             wingified = wingifiedTemp;
         }
     } catch (e) {
-        handleExceptions(e);
+        handleExceptions(e); console.log('handling');
     } finally {
         // If the code could not be wingified, return a dummy object
         if (typeof wingified === 'undefined') {
@@ -68,6 +68,7 @@ function wingify(options, code) {
 
 // An object to return every time a piece of code cannot be wingified
 var wingifiedDummy = {
+    canFly: false,
     run: function () {
         console.log('Supplied code could not be wingified, so it cannot run.');
     },
