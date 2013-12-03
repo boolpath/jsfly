@@ -96,15 +96,18 @@ function intercept(code) {
 /* Error handlers for defined domains */
 AIRSPACE.domains['default'].on('error', function (err) {
     switch (err.name) {
-        case 'ReferenceError':
-            console.log('Reference error: '+err.message);
+    case 'ReferenceError':
+        console.log('Reference error: '+err.message);
             break;
-        case 'TypeError':
-            console.log('Type error: '+err.message);
-            break;
-        default:
-            console.log(err);
-            break;
+    case 'TypeError':
+        console.log('Type error: '+err.message);
+        break;
+    case 'SyntaxError':
+        console.log('Syntax error: '+err.message);
+        break;
+    default:
+        console.log(err);
+        break;
     }
 });
 
