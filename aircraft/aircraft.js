@@ -53,7 +53,7 @@ function create(options, code) {
 function newFunction(options, code) {
     var stringFunction = JSFly.airspace.preprocess(code),   // Prepares the code to make it JSFly-ready
         jsFunction,         // The function that will be created from the supplied and preprocessed code
-        wingified = {},     // The object that will hold the code properties and #run #fly #crash methods
+        wingified,          // The object that will hold the code properties and #run #fly #crash methods
         id;                 // A unique identifier of the wingified code needed to handle global calls
 
     try {
@@ -62,6 +62,7 @@ function newFunction(options, code) {
         id = options.name + '_' + (new Date()).getTime() + (Math.floor(Math.random()*1000));
         Object.defineProperty(jsFunction, 'id', { value: id });
 
+        wingified = Object.create(null);
         Object.defineProperty(wingified, 'id', { value: id });
         Object.defineProperty(wingified, 'name', { value: options.name });
         Object.defineProperty(wingified, 'type', { value: 'function' });
@@ -71,23 +72,18 @@ function newFunction(options, code) {
         // #wingify and #run separately in order to keep a reference to wingified
         // The function is called with 'this' set to itself to prevent global namespace clobbering
         Object.defineProperty(wingified, 'run', { 
-            value: function (params) { 
-                run(params);
+            value: function (params, onError) { 
+                run(params, onError);
                 return wingified;
             } 
         });
         // The 'run' variable is created to hold the #run method of the wingified object
         // in order to prevent its implementation to be displayed if #toString is called
-        // A Node domain is created to catch runtime error and prevent JSFly from crashing
-        Object.defineProperty(wingified, 'domain', { value: domain.create() });
-        var run = function (params, onError) {
-            onError = (typeof onError === 'function') ? onError : undefined;
-            wingified.domain.on('error', onError || function (err) {
-                console.log(err);
-            });
-            wingified.domain.run(function () {
+        // The #run function is added to a Node domain in order to catch runtime errors/exceptions
+        var run = function (params) {
+            JSFly.airspace.intercept(function () {
                 jsFunction.call(jsFunction, JSFly.globals, params);
-            });
+            })();   // Call the returned wrapper
         }
 
         // The #fly and #crash methods are just interfaces to JSFly's global methods
@@ -136,7 +132,7 @@ function newModule(options, code) {
         // The same ID is also applied to the returned function since it refers to the same supplied code
         Object.defineProperty(jsFunction, 'id', { value: id });
 
-        wingified = Object.create();
+        wingified = Object.create(null);
         Object.defineProperty(wingified, 'id', { value: id });
         Object.defineProperty(wingified, 'name', { value: options.name });
         Object.defineProperty(wingified, 'type', { value: 'module' });
@@ -153,16 +149,11 @@ function newModule(options, code) {
         });
         // The 'run' variable is created to hold the #run method of the wingified object
         // in order to prevent its implementation to be displayed if #toString is called
-        // A Node domain is created to catch runtime error and prevent JSFly from crashing
-        Object.defineProperty(wingified, 'domain', { value: domain.create() });
-        var run = function (params, onError) {
-            onError = (typeof onError === 'function') ? onError : undefined;
-            wingified.domain.on('error', onError || function (err) {
-                console.log(err);
-            });
-            wingified.domain.run(function () {
+        // The #run function is added to a Node domain in order to catch runtime errors/exceptions
+        var run = function (params) {
+            JSFly.airspace.intercept(function () {
                 jsFunction.call(jsReturn, JSFly.globals, params);
-            });
+            })();   // Call the returned wrapper
         }
 
         // The #fly and #crash methods are just interfaces to JSFly's global methods
