@@ -17,10 +17,11 @@ var AIRPORT = {
  *@method {function} create - Creates a JSFly server
  */
 module.exports = {
+    gates: AIRPORT.gates,
+
     create: create,
     addPlane: addPlane,
-
-    gates: AIRPORT.gates
+    requestDeparture: requestDeparture
 };
 
 /*----------------------------------------------------------------------------*/
@@ -29,17 +30,14 @@ module.exports = {
  * @param
  * @returns
  */
-function create(port, onReady) {
-    if (typeof port !== 'number') {
-        port = parseInt(port);
-        if (isNaN(port)) {
-            throw exceptions.throwNew('wrong port');
-        }
+function create(options, onReady) {
+    if (!validPort(options)) {
+        throw exceptions.throwNew('wrong port');
     } else if (typeof onReady !== 'function') {
         throw exceptions.throwNew('wrong onReady');
     }
 
-    AIRPORT.tower.listen(port, function (tower) {
+    AIRPORT.tower.listen(options, function (tower) {
         onReady(AIRPORT.emitter);
         tower.on('ready', function () {
             AIRPORT.emitter.emit('ready');
@@ -61,3 +59,45 @@ function addPlane(wingified, options) {
 
     return added;
 }
+
+/** 
+ * @param {object} wingified
+ * @returns
+ */
+function requestDeparture(callerID, targetAirport) {
+    console.log(callerID.split('_')[0] + ' wants to fly');
+    AIRPORT.runway.request(targetAirport, function () {
+
+    });
+}
+
+/** 
+ * @param {object} options
+ * @returns
+ */
+ function validHost(options) {
+    var valid = true;
+
+    if (typeof options.host !== 'string') {
+        valid = false;
+    }
+
+    return valid;
+ }
+
+ /** 
+ * @param {object} options
+ * @returns
+ */
+ function validPort(options) {
+    var valid = true;
+
+    if (typeof options.port !== 'number') {
+        options.port = parseInt(options.port);
+        if (isNaN(options.port)) {
+            valid = false;
+        }
+    }
+
+    return valid;
+ }
