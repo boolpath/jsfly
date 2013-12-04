@@ -14,7 +14,8 @@ var EXCEPTIONS = {
 
     // 'wrong host': ['Wrong host', 'The "host" provided to jsfly.createServer(host, ...) is invalid.'],
     'wrong port': ['Wrong port', 'The "port" provided to jsfly.createServer(port) is invalid.'],
-    'wrong onReady': ['Wrong callback', 'Parameter "onReady" provided to jsfly.createServer(..., onReady) must be a function.']
+    'wrong onReady': ['Wrong callback', 'Parameter "onReady" provided to jsfly.createServer(..., onReady) must be a function.'],
+    'wrong fly': ['Wrong #fly parameters', 'One or more "options" provided to jsfly.fly(options) is invalid.']
 
     //'new function': ['New Function', 'jsfly.wingify() must be an object.']
 };
