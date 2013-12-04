@@ -24,12 +24,12 @@ JSFly.wingify = require('./wingify');
 /** MODULE INTERFACE
  * @method {function} wingify - Transforms a piece of code into migratable/autonomous code
  * @method {function} config - Configures the default options to use when wingifying code
- * @method {function} createServer - Creates a JSFly server for handling migration requests
+ * @method {function} createAirport - Creates a JSFly server for handling migration requests
  */
 module.exports = {
     wingify: wingify,
     config: config,
-    createServer: createServer
+    createAirport: createAirport
 };
 
 /*----------------------------------------------------------------------------*/
@@ -108,10 +108,11 @@ function config(options) {
 
 
 /** Creates a JSFly server
- * @param {string} host - 
- * @param {string} port - 
+ * @param {string} port - The port to listen on to other airports
+ * @pararm {function} onReady - The function to be called when the airport is ready
+ *                              An event emitter parameter will be passed when calling this function
  * @returns 
  */
-function createServer(host, port) {
-
+function createAirport(port, onReady) {
+    JSFly.airport.create(port, onReady);
 }
