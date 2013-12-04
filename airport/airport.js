@@ -64,12 +64,20 @@ function addPlane(wingified, options) {
  * @param {object} wingified
  * @returns
  */
-function requestDeparture(callerID, targetAirport) {
+function requestDeparture(callerID, targetOptions) {
     console.log(callerID.split('_')[0] + ' wants to fly');
-    AIRPORT.runway.request(targetAirport, function () {
+    if (//typeof targetOptions === 'undefined' || 
+        //!validHost(targetOptions) ||
+        !validPort(targetOptions)) {
+            throw exceptions.throwNew('wrong fly');
+    }
+
+    AIRPORT.runway.request(callerID, targetOptions, function () {
 
     });
 }
+
+/*----------------------------------------------------------------------------*/
 
 /** 
  * @param {object} options
@@ -78,7 +86,7 @@ function requestDeparture(callerID, targetAirport) {
  function validHost(options) {
     var valid = true;
 
-    if (typeof options.host !== 'string') {
+    if (options.host && typeof options.host !== 'string') {
         valid = false;
     }
 
@@ -92,7 +100,7 @@ function requestDeparture(callerID, targetAirport) {
  function validPort(options) {
     var valid = true;
 
-    if (typeof options.port !== 'number') {
+    if (options.port && typeof options.port !== 'number') {
         options.port = parseInt(options.port);
         if (isNaN(options.port)) {
             valid = false;

@@ -40,3 +40,14 @@ function listen(options, onReady) {
         TOWER.emitter.emit('ready');
     });
 }
+
+
+/** 
+ * @param
+ * @returns
+ */
+function controlTraffic(clientAirport) {
+    clientAirport.on('jsPlane', function () {
+
+    });
+}
