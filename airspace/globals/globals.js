@@ -31,7 +31,7 @@ module.exports = {
 /** Returns the global calls that are accessible to JSFly code
  * @returns {object} globals - An object containing the global calls accessible to JSFly code
  */
-function getGlobals(AIRSPACE) {
+function getGlobals(AIRSPACE, AIRPORT) {
     var globals = {}; 
 
     // fly
@@ -47,7 +47,7 @@ function getGlobals(AIRSPACE) {
     // in order to prevent its implementation to be displayed if #toString is called
     var fly = function () {
         var callerID = getCaller(),
-            caller = AIRSPACE.airport.gates[callerID],
+            caller = AIRPORT.gates[callerID],
             callerName = caller ? caller.name : callerID.split('_')[0];
 
         console.log(callerName + ' wants to fly.');
@@ -66,7 +66,7 @@ function getGlobals(AIRSPACE) {
     // in order to prevent its implementation to be displayed if #toString is called
     var crash = function () {
         var callerID = getCaller(),
-            caller = AIRSPACE.airport.gates[callerID],
+            caller = AIRPORT.gates[callerID],
             callerName = caller ? caller.name : callerID.split('_')[0];
 
         console.log(callerName + ' wants to crash.');
@@ -94,7 +94,7 @@ function getGlobals(AIRSPACE) {
             value: function (theFunction, timeout) { 
                 var callerID = getCaller(),
                     timeoutHandler,
-                    caller = AIRSPACE.airport.gates[callerID];
+                    caller = AIRPORT.gates[callerID];
 
                 if (!caller) {
                     return;
