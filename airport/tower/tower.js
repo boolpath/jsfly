@@ -22,18 +22,20 @@ module.exports = {
 
 /*----------------------------------------------------------------------------*/
 
-/** 
- * @param
+/** Creates a TCP server to listen to other airport requests
+ * @param {object} options - Options like the port to listen on
+ * @param {function} onReady - A callback to be invoked when the server is ready
  * @returns
  */
-function listen(port, onReady) {
+function listen(options, onReady) {
     TOWER.server = net.createServer(function onNewAirport(socket) {
-        var jsAirport = tcpEventEmitter.bind(socket);
+        var newAirport = tcpEventEmitter.bind(socket);
+        controlTraffic(newAirport);
         console.log('new airport connected');
     });
 
-    TOWER.server.listen(port, function () {
-        console.log('JSFly control tower listening on port '+port);
+    TOWER.server.listen(options.port, function () {
+        console.log('JSFly control tower listening on port ' + options.port);
         onReady(TOWER.emitter);
         TOWER.emitter.emit('ready');
     });
