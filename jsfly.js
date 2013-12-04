@@ -108,11 +108,11 @@ function config(options) {
 
 
 /** Creates a JSFly server
- * @param {string} port - The port to listen on to other airports
+ * @param {string} options - Options like the port to listen on to other airports
  * @pararm {function} onReady - The function to be called when the airport is ready
  *                              An event emitter parameter will be passed when calling this function
  * @returns 
  */
-function createAirport(port, onReady) {
-    JSFly.airport.create(port, onReady);
+function createAirport(options, onReady) {
+    JSFly.airport.create(options, onReady);
 }
