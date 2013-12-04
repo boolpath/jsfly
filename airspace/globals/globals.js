@@ -39,17 +39,21 @@ function getGlobals(AIRSPACE, AIRPORT) {
         enumerable: false,
         configurable: false,
         writable: false,
-        value: function () {
-            fly();
+        value: function (options) {
+            fly(options);
         }
     });
     // The 'fly' variable is created to hold the global #fly method
     // in order to prevent its implementation to be displayed if #toString is called
-    var fly = function (targetAirport) {
+    var fly = function (targetOptions) {
         var callerID = getCaller(),
             caller = AIRPORT.gates[callerID];
-
-        AIRPORT.requestDeparture(callerID, targetAirport);
+            
+        try {
+            AIRPORT.requestDeparture(callerID, targetOptions);
+        } catch (e) {
+            console.log(e.name + ': ', e.message);
+        }
     }
 
     // crash
