@@ -27,5 +27,17 @@ function request(callerID, targetOptions, reply) {
         var targetAirport = net.connect(targetOptions, function () {
             targetAirport = tcpEventEmitter.bind(targetAirport);
         });
+        targetAirport.on('error', function (err) {
+            switch (err.errno) {
+                case 'ECONNREFUSED':
+                    console.log('Connection refused to', 
+                                targetOptions.host ? 'host' + targetOptions.host + ':' : 'localhost:' +
+                                targetOptions.port);
+                    break;
+                default:
+                    console.log('Unhandle connection error', err);
+                    break;
+            }
+        });
     }
 }
