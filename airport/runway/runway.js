@@ -24,20 +24,43 @@ module.exports = {
  */
 function request(callerID, targetOptions, reply) {
     if (typeof RUNWAY.requests[callerID] === 'undefined') {
-        var targetAirport = net.connect(targetOptions, function () {
-            targetAirport = tcpEventEmitter.bind(targetAirport);
-        });
-        targetAirport.on('error', function (err) {
-            switch (err.errno) {
-                case 'ECONNREFUSED':
-                    console.log('Connection refused to', 
-                                targetOptions.host ? 'host' + targetOptions.host + ':' : 'localhost:' +
-                                targetOptions.port);
-                    break;
-                default:
-                    console.log('Unhandle connection error', err);
-                    break;
-            }
-        });
+        var targetServer, 
+            retry = { 
+                again: true,
+                attempts: 0,
+                maxAttempts: 3,
+                timeout: 3000
+            };
+
+        (function connect() {
+            targetServer = net.connect(targetOptions, function () {
+                targetAirport = tcpEventEmitter.bind(targetServer);
+                reply({
+                    connected: true,
+                    airport: targetAirport
+                });
+            });
+            targetServer.on('error', function (err) {
+                switch (err.errno) {
+                    case 'ECONNREFUSED':
+                        console.log('Connection refused to', 
+                                    targetOptions.host ? 'host' + targetOptions.host : 'localhost' +
+                                    ':' + targetOptions.port);
+                        if (++retry.attempts <= retry.maxAttempts) {   
+                            setTimeout(function tryAgain() {
+                                connect();
+                            }, retry.timeout);
+                        } else {
+                            reply({
+                                connected: false
+                            });
+                        }
+                        break;
+                    default:
+                        console.log('Unhandle connection error', err);
+                        break;
+                }
+            });
+        })();
     }
 }
