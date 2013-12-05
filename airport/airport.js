@@ -66,14 +66,18 @@ function addPlane(wingified, options) {
  */
 function requestDeparture(callerID, targetOptions) {
     console.log(callerID.split('_')[0] + ' wants to fly');
-    if (//typeof targetOptions === 'undefined' || 
-        //!validHost(targetOptions) ||
+    if (typeof targetOptions === 'undefined' || 
+        !validHost(targetOptions) ||
         !validPort(targetOptions)) {
             throw exceptions.throwNew('wrong fly');
     }
 
-    AIRPORT.runway.request(callerID, targetOptions, function () {
-
+    AIRPORT.runway.request(callerID, targetOptions, function (result) {
+        if (result.connected) {
+            AIRPORT.runway.takeoff(AIRPORT.gates[callerID]);
+        } else {
+            console.log('Target airport is not available.');
+        }
     });
 }
 
