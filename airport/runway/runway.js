@@ -13,7 +13,8 @@ var RUNWAY = {
  *@method {function} - 
  */
 module.exports = {
-    request: request
+    request: request,
+    takeoff: takeoff
 };
 
 /*----------------------------------------------------------------------------*/
@@ -28,24 +29,26 @@ function request(callerID, targetOptions, reply) {
             retry = { 
                 again: true,
                 attempts: 0,
-                maxAttempts: 3,
+                maxAttempts: 1,
                 timeout: 3000
             };
 
         (function connect() {
             targetServer = net.connect(targetOptions, function () {
                 targetAirport = tcpEventEmitter.bind(targetServer);
-                reply({
+                RUNWAY.requests[callerID] = {
                     connected: true,
                     airport: targetAirport
-                });
+                };
+                reply(RUNWAY.requests[callerID]);
             });
             targetServer.on('error', function (err) {
                 switch (err.errno) {
                     case 'ECONNREFUSED':
                         console.log('Connection refused to', 
-                                    targetOptions.host ? 'host' + targetOptions.host : 'localhost' +
-                                    ':' + targetOptions.port);
+                                    targetOptions.host ? 'host' + targetOptions.host + ':' : 
+                                    'localhost:' + targetOptions.port);
+
                         if (++retry.attempts <= retry.maxAttempts) {   
                             setTimeout(function tryAgain() {
                                 connect();
@@ -57,10 +60,18 @@ function request(callerID, targetOptions, reply) {
                         }
                         break;
                     default:
-                        console.log('Unhandle connection error', err);
+                        console.log('Unhandle connection error:\n', err);
                         break;
                 }
             });
         })();
     }
+}
+
+/** 
+ * @param
+ * @returns
+ */
+function takeoff(jsPlane) {
+    console.log(jsPlane.id + ' wants to takeoff.');
 }
