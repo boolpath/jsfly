@@ -77,6 +77,10 @@ function preprocess(code) {
  * @returns {string} stringFunction - A string version of the function with prepended calls
  */
 function prependCalls(rawFunction) {
+    if (typeof rawFunction === 'string') { 
+        return rawFunction; 
+    }
+    
     var stringFunction = rawFunction.toString().trim();
     AIRSPACE.calls.forEach(function (call) {
         stringFunction = stringFunction.replace(new RegExp(call, 'g'), 'jsfly.'+call);
@@ -96,13 +100,13 @@ function intercept(code) {
 AIRSPACE.domains['default'].on('error', function (err) {
     switch (err.name) {
     case 'ReferenceError':
-        console.log('Reference error: '+err.message);
+        console.log('Reference error: ' + err.message);
             break;
     case 'TypeError':
-        console.log('Type error: '+err.message);
+        console.log('Type error: ' + err.message);
         break;
     case 'SyntaxError':
-        console.log('Syntax error: '+err.message);
+        console.log('Syntax error: ' + err.message);
         break;
     default:
         console.log(err);
