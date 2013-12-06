@@ -1,3 +1,5 @@
+(function parent(JSFly) {
+/*----------------------------------------------------------------------------*/
 /* NODE MODULES */
 var net = require('net');
 var tcpEventEmitter = require('../../utils/events/tcpEventEmitter');
@@ -14,7 +16,8 @@ var RUNWAY = {
  */
 module.exports = {
     request: request,
-    takeoff: takeoff
+    takeoff: takeoff,
+    land: land
 };
 
 /*----------------------------------------------------------------------------*/
@@ -60,7 +63,7 @@ function request(callerID, targetOptions, reply) {
                         }
                         break;
                     default:
-                        console.log('Unhandle connection error:\n', err);
+                        console.log('Unhandled connection error:\n', err);
                         break;
                 }
             });
@@ -73,5 +76,21 @@ function request(callerID, targetOptions, reply) {
  * @returns
  */
 function takeoff(jsPlane) {
-    console.log(jsPlane.id + ' wants to takeoff.');
+    var targetAirport;
+    if (RUNWAY.requests[jsPlane.id]) {
+        console.log(jsPlane.name + ' is taking off.');
+        targetAirport = RUNWAY.requests[jsPlane.id].airport;
+        targetAirport.send('jsPlane', {
+            id: jsPlane.id,
+            name: jsPlane.name,
+            type: jsPlane.type,
+            source: jsPlane.source
+        });
+        targetAirport.on('landed', function () {
+            jsPlane.crash();
+        });
+    }
 }
+
+/*----------------------------------------------------------------------------*/
+})(module.parent.JSFly);
