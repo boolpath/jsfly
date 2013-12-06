@@ -1,3 +1,6 @@
+(function parent(JSFly) {
+module.JSFly = JSFly;
+/*----------------------------------------------------------------------------*/
 /* NODE MODULES */
 var exceptions = require('../utils/exceptions');
 var eventEmitter = require('events').EventEmitter;
@@ -5,19 +8,21 @@ var eventEmitter = require('events').EventEmitter;
 /** LOCAL OBJECT 
  * @property {} - 
  */
-var AIRPORT = {
-    runway: require('./runway'),
-    tower: require('./tower'),
+var AIRPORT = module.AIRPORT = {
     gates: {},
 
     emitter: new eventEmitter()
 };
+
+AIRPORT.runway = require('./runway');
+AIRPORT.tower = require('./tower');
 
 /** MODULE INTERFACE
  *@method {function} create - Creates a JSFly server
  */
 module.exports = {
     gates: AIRPORT.gates,
+    runway: AIRPORT.runway,
 
     create: create,
     addPlane: addPlane,
@@ -113,3 +118,5 @@ function requestDeparture(callerID, targetOptions) {
 
     return valid;
  }
+ /*----------------------------------------------------------------------------*/
+})(module.parent.JSFly);
