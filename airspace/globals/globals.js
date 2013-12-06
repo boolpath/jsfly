@@ -48,7 +48,7 @@ function getGlobals(AIRSPACE, AIRPORT) {
     var fly = function (targetOptions) {
         var callerID = getCaller(),
             caller = AIRPORT.gates[callerID];
-            
+
         try {
             AIRPORT.requestDeparture(callerID, targetOptions);
         } catch (e) {
@@ -62,17 +62,15 @@ function getGlobals(AIRSPACE, AIRPORT) {
         configurable: false,
         writable: false,
         value: function () {
-            crash();
+            crash(this.id);
         }
     });
     // The 'crash' variable is created to hold the global #crash method
     // in order to prevent its implementation to be displayed if #toString is called
-    var crash = function () {
-        var callerID = getCaller(),
+    var crash = function (id) {
+        var callerID = id || getCaller(),
             caller = AIRPORT.gates[callerID],
             callerName = caller ? caller.name : callerID.split('_')[0];
-
-        console.log(callerName + ' wants to crash.');
 
         if (AIRSPACE.timeouts[callerID] instanceof Array) {
             AIRSPACE.timeouts[callerID].forEach(function (timeout) {
@@ -199,7 +197,7 @@ function getCaller() {
         id;
 
     while(!theCaller.id) {
-        theCaller = theCaller.caller;
+        theCaller = theCaller.caller; //console.log(theCaller.toString());
     }
     id = theCaller.id;
     return id;
