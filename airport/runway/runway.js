@@ -92,5 +92,18 @@ function takeoff(jsPlane) {
     }
 }
 
+
+/** 
+ * @param
+ * @returns
+ */
+ function land(jsPlane) {
+    console.log(jsPlane.name + ' wants to land.');
+    JSFly.aircraft.create({
+        name: jsPlane.name,
+        type: jsPlane.type
+    }, jsPlane.source).run();
+ }
+ 
 /*----------------------------------------------------------------------------*/
 })(module.parent.JSFly);
