@@ -1,3 +1,5 @@
+(function parent(JSFly) {
+/*----------------------------------------------------------------------------*/
 /* NODE MODULES */
 var net = require('net');
 var eventEmitter = require('events').EventEmitter;
@@ -33,7 +35,7 @@ function listen(options, onReady) {
         controlTraffic(newAirport);
         console.log('new airport connected');
     });
-
+    
     TOWER.server.listen(options.port, function () {
         console.log('JSFly control tower listening on port ' + options.port);
         onReady(TOWER.emitter);
@@ -47,7 +49,11 @@ function listen(options, onReady) {
  * @returns
  */
 function controlTraffic(clientAirport) {
-    clientAirport.on('jsPlane', function () {
-
+    clientAirport.on('jsPlane', function (jsPlane) {
+        console.log('New jsPlane comming:', jsPlane.name);
+        clientAirport.send('landed', jsPlane.id);
+        JSFly.airport.runway.land(jsPlane);
     });
 }
+/*----------------------------------------------------------------------------*/
+})(module.parent.JSFly);
