@@ -25,7 +25,7 @@ var TcpEventEmitter = function (socket) {
 					self.emit('other', message);
 				}
 			} catch (e) { 
-				console.log(warning + ' for the message '+packet+' \nError: ' + e); 
+				console.log(warning + ' for the message '+packet.substring(0, 20)+' \nError: ' + e); 
 			}
 		});
 	});
