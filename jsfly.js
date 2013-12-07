@@ -19,6 +19,7 @@ JSFly.airport = require('./airport');
 JSFly.airspace = require('./airspace');
 JSFly.airspace.setup(); // 
 JSFly.globals = JSFly.airspace.getGlobals();
+JSFly.aircraft = require('./aircraft');
 JSFly.wingify = require('./wingify');
 
 /** MODULE INTERFACE
@@ -52,7 +53,7 @@ function wingify(options, code) {
     try {
         // #wingify the provided code and add it to the system
         var wingifiedTemp = JSFly.wingify(options, code);
-        if (JSFly.airport.addPlane(wingifiedTemp, options)) {
+        if (wingifiedTemp && JSFly.airport.addPlane(wingifiedTemp, options)) {
             wingified = wingifiedTemp;
         }
     } catch (e) {
