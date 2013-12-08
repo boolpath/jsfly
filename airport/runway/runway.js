@@ -49,8 +49,8 @@ function request(callerID, targetOptions, reply) {
                 switch (err.errno) {
                     case 'ECONNREFUSED':
                         console.log('Connection refused to', 
-                                    targetOptions.host ? 'host' + targetOptions.host + ':' : 
-                                    'localhost:' + targetOptions.port);
+                                    (targetOptions.host ? targetOptions.host + ':' : 
+                                    'localhost:') + targetOptions.port);
 
                         if (++retry.attempts <= retry.maxAttempts) {   
                             setTimeout(function tryAgain() {
@@ -98,12 +98,22 @@ function takeoff(jsPlane) {
  * @returns
  */
  function land(jsPlane) {
-    console.log(jsPlane.name + ' wants to land.');
-    JSFly.aircraft.create({
-        name: jsPlane.name,
-        type: jsPlane.type
-    }, jsPlane.source).run();
+    var newJSPlane,
+        options = {
+            name: jsPlane.name,
+            type: jsPlane.type
+        };
+    
+    newJSPlane = JSFly.aircraft.create(options, jsPlane.source);
+
+    if (newJSPlane) {
+        JSFly.airport.addPlane(newJSPlane, options);
+        newJSPlane.run();
+        console.log(jsPlane.name + ' just landed.\n');
+
+        return newJSPlane;
+    }
  }
- 
+
 /*----------------------------------------------------------------------------*/
 })(module.parent.JSFly);
