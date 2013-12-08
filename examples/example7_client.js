@@ -6,11 +6,11 @@ var jsfly = require('../jsfly');
 // You can supply any function like the ones discussed in the previous examples
 var wingified = jsfly.wingify(function myNameIs(jsfly) {
     setInterval(function () {
-        console.log("Hello world!");
+        console.log('Hello world!');
     }, 1000);
     // If the code is not migrated after 5.2 seconds, it crashes itself
     setTimeout(function () {
-        console.log("Good bye world!");
+        console.log('Good bye world!');
         jsfly.crash();
     }, 5200);
 }).run();
