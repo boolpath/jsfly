@@ -96,7 +96,7 @@ function getGlobals(AIRSPACE, AIRPORT) {
                 var callerID = getCaller(),
                     timeoutHandler,
                     caller = AIRPORT.gates[callerID];
-                    console.log(callerID);
+
                 if (!caller) {
                     return;
                 }
@@ -147,7 +147,12 @@ function getGlobals(AIRSPACE, AIRPORT) {
             writable: false,
             value: function(theFunction, interval) { 
                 var callerID = getCaller(),
-                    intervalHandler;
+                    intervalHandler,
+                    caller = AIRPORT.gates[callerID];
+
+                if (!caller) {
+                    return;
+                }
                 
                 if (!(AIRSPACE.intervals[callerID] instanceof Array)) {
                     AIRSPACE.intervals[callerID] = [];
