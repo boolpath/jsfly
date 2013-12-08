@@ -47,6 +47,9 @@ function create(options, onReady) {
         tower.on('ready', function () {
             AIRPORT.emitter.emit('ready');
         });
+        tower.on('newJSPlane', function (jsPlane) {
+            AIRPORT.emitter.emit('newJSPlane', jsPlane);
+        });
     });
 }
 
