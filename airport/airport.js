@@ -9,6 +9,8 @@ var eventEmitter = require('events').EventEmitter;
  * @property {} - 
  */
 var AIRPORT = module.AIRPORT = {
+    host: undefined,
+    port: undefined,
     gates: {},
 
     emitter: new eventEmitter()
@@ -46,6 +48,8 @@ function create(options, onReady) {
         onReady(AIRPORT.emitter);
         tower.on('ready', function () {
             AIRPORT.emitter.emit('ready');
+            AIRPORT.host = options.host || 'localhost';
+            AIRPORT.port = options.port;
         });
         tower.on('newJSPlane', function (jsPlane) {
             AIRPORT.emitter.emit('newJSPlane', jsPlane);
@@ -78,6 +82,8 @@ function requestDeparture(callerID, targetOptions) {
         !validHost(targetOptions) ||
         !validPort(targetOptions)) {
             throw exceptions.throwNew('wrong fly');
+    } else if (targetOptions.port == AIRPORT.port && targetOptions.host == AIRPORT.host) {
+        throw exceptions.throwNew('same airport');
     }
 
     AIRPORT.runway.request(callerID, targetOptions, function (result) {
@@ -98,8 +104,12 @@ function requestDeparture(callerID, targetOptions) {
  function validHost(options) {
     var valid = true;
 
-    if (options.host && typeof options.host !== 'string') {
-        valid = false;
+    if (options.host) {
+        if (typeof options.host !== 'string') {
+            valid = false;
+        }
+    } else {
+        options.host = 'localhost';
     }
 
     return valid;
