@@ -5,11 +5,11 @@ var jsfly = require('../jsfly');
 
 // You can supply any function like the ones discussed in the previous examples
 var wingified = jsfly.wingify(function myNameIs(jsfly) {
-    setInterval(function () {
+    setInterval(function periodic() {
         console.log('Hello world!');
     }, 1000);
     // If the code is not migrated after 5.2 seconds, it crashes itself
-    setTimeout(function () {
+    setTimeout(function outOfFuel() {
         console.log('Good bye world!');
         jsfly.crash();
     }, 5200);
@@ -17,7 +17,7 @@ var wingified = jsfly.wingify(function myNameIs(jsfly) {
 
 // Then, you can send the code to run on another server by calling the #fly method
 // and providing the server parameters in an object
-setTimeout(function () {
+setTimeout(function migrateCode() {
     wingified.fly({ 
         host: 'localhost',  // optional for localhost
         port: '3600' 

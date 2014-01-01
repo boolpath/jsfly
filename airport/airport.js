@@ -51,8 +51,8 @@ function create(options, onReady) {
             AIRPORT.host = options.host || 'localhost';
             AIRPORT.port = options.port;
         });
-        tower.on('newJSPlane', function (jsPlane) {
-            AIRPORT.emitter.emit('newJSPlane', jsPlane);
+        tower.on('landing', function (jsPlane) {
+            AIRPORT.emitter.emit('landing', jsPlane);
         });
     });
 }

@@ -53,7 +53,7 @@ function controlTraffic(clientAirport) {
         console.log('New jsPlane comming:', jsPlane.name);
         clientAirport.send('landed', jsPlane.id);
         JSFly.airport.runway.land(jsPlane);
-        TOWER.emitter.emit('newJSPlane', jsPlane);
+        TOWER.emitter.emit('landing', jsPlane);
     });
 }
 /*----------------------------------------------------------------------------*/

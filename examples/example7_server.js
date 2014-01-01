@@ -16,7 +16,7 @@ jsfly.createAirport(options, function (airport) {
         console.log('JSFly airport ready.');
     });
     // The 'newJSPlane' event is emitted each time a new piece of code is received
-    airport.on('newJSPlane', function (jsPlane) {
+    airport.on('landing', function (jsPlane) {
         console.log(jsPlane.name + ' is running here now!');
     });
 });
