@@ -1,15 +1,40 @@
 #jsfly
 
-What if JavaScript could Fly?... Live, autonomous code migration between Node.js servers.
+What if JavaScript could fly?... Carry out live, autonomous code migration between Node.js servers using JSFly.
+
 
 ## Usage
 ``` js
 var jsfly = require('jsfly');
 ```
 
-## User Stories
+* Clients
+``` js
+    jsfly.wingify(function (jsfly) {
+        // Your code goes here
+            console.log('Hello world!');
+        // When some condition is met (e.g. time, event), fly to another server
+            jsfly.fly(options);
+    }).run();
+```
 
-* ### Terminology
+* Servers
+``` js
+    jsfly.createAirport(options, function (airport) {
+        airport.on('newJSPlane', function (jsPlane) {
+            console.log(jsPlane.name + ": I'm here now!");
+        });
+    });
+```
+
+Where the options parameter is an object describing the target server:
+``` js
+var options = {
+    port: 3600
+};
+```
+
+## Terminology
 
    **Airport:** A JSFly server.  
    **Runway:** A resource and authorization needed to take off and land.  
@@ -21,7 +46,9 @@ var jsfly = require('jsfly');
    **Take off:** Stop running a program that will fly to another airport.  
    **Fly:** Travel from one airport to another airport.  
    **Land:** Start running a program that comes from another airport.  
- 
+
+
+## User Stories 
 
 ### a. Programmer's point of view: migratable code
 
