@@ -1,6 +1,7 @@
-#jsfly
+# What if JavaScript could fly...?
+![alt tag](https://github.com/jorgezaccaro/jsfly/blob/master/jsfly_logo.png?raw=true)
 
-What if JavaScript could fly?... Write code that is capable of migrating autonomously between Node.js servers using JSFly.
+### Write code capable of migrating autonomously between Node.js servers using JSFly.  
 
 
 ## Usage
