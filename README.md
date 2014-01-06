@@ -39,12 +39,16 @@ var options = {
 
 JavaScript is everywhere now. Browsers, servers, desktops, mobile devices, robots. That is great! And it will be taken to even more places for sure. However, once JavaScript code is running on a given environment, it is constrained to continue running on that environment with the same available data and processing resources.
 
-Although this constraint is not a problem for conventional applications whose location and allocation of resources are predefined and controlled authoritatively, it does create some barriers when considering different programming paradigms that would give applications some resource allocation autonomy to decide where to run and look for less described, unexposed, unindexed data.
+Although this constraint is not a problem for conventional applications whose location and allocation of resources are predefined and controlled authoritatively, it does create some barriers when considering different programming paradigms that would give applications some autonomy to decide where to run and look for less described, unexposed, unindexed data.
 
 Then, what if in addition to running JavaScript code in many different environments, we could give it the ability to autonomously move from one environment to another while running?
 
 
-* An analogy - Moles and burrows
+### An analogy - Moles and burrows
+
+<img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/mole0.png?raw=true" width="435px">
+
+
 
 <img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/molesSlow.gif?raw=true" width="435px">
 
