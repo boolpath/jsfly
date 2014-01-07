@@ -39,9 +39,14 @@ var options = {
 
 JavaScript is everywhere now. Browsers, servers, desktops, mobile devices, robots. That is great! And it will be taken to even more places for sure. However, once JavaScript code is running on a given environment, it is constrained to continue running on that environment with the same available data and processing resources.
 
-Although this constraint is not a problem for conventional applications whose location and allocation of resources are predefined and controlled authoritatively, it does create some barriers when considering different programming paradigms that would give applications some autonomy to decide where to run and look for less described, unexposed, unindexed data.
+Although this constraint is not a problem for conventional applications whose location and allocation of resources are predefined and controlled authoritatively, it does create some barriers when considering different programming paradigms that would give applications the autonomy to decide where to run and look for less described, unexposed, unindexed data.
 
 Then, what if in addition to running JavaScript code in many different environments, we could give it the ability to autonomously move from one environment to another while running?
+
+
+### Mobility and Artificial Intelligence
+
+A common feature of most intelligent species is their ability to move autonomously. Although the field of artificial intelligence covers  much more than mobility issues, providing location awareness and mobility freedom to JavaScript programs could create new ways to make progress in this exciting field.
 
 
 ### An analogy - Moles and burrows
@@ -54,7 +59,8 @@ Digital whack-a-mole games like [this](http://) create the same illusion by simp
 
 <img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/molesSlow.gif?raw=true" width="435px">
 
-Although it's not likely to find an application in which hitting a piece of code's "head" would be useful or even fun, it is possible to think about several scenarios that would benefit from running code capable of moving from one place to another, such as visiting servers for querying local databases, creating non-HTTP Web crawlers and deploying on-call data processing scripts.
+Although it's not likely to find an application in which hitting a piece of code's "head" would be useful or even fun, it is possible to consider several scenarios that would benefit from running code capable of moving from one place to another, such as locally querying unexposed, distributed databases, exploring the Web beyond HTML documents with non-HTTP crawlers and deploying propietary data processing scripts on demand.
+
 
 ## Examples
 
