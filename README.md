@@ -46,11 +46,17 @@ Then, what if in addition to running JavaScript code in many different environme
 
 ### An analogy - Moles and burrows
 
+Arcade whack-a-mole games create the illusion of one or more moles moving from one burrow to another by showing and hiding each burrow's mole according to a given time sequence.
+
 <img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/mole0.png?raw=true" width="435px">
 
-
+Digital whack-a-mole games like [this](http://) create the same illusion by simply displaying the moles in one or more burrows according to a given time sequence.
 
 <img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/molesSlow.gif?raw=true" width="435px">
+
+Although it's not likely to find an application in which hitting a piece of code's "head" would be useful or even fun, it is possible to think about several scenarios that would benefit from running code capable of moving from one place to another, such as visiting servers for querying local databases, creating non-HTTP Web crawlers and deploying on-call data processing scripts.
+
+## Examples
 
 
 ## Terminology
@@ -65,79 +71,3 @@ Then, what if in addition to running JavaScript code in many different environme
    **Take off:** Stop running a program that will fly to another airport.  
    **Fly:** Travel from one airport to another airport.  
    **Land:** Start running a program that comes from another airport.  
-
-
-## User Stories 
-
-### a. Programmer's point of view: migratable code
-
-1. 
-In order to     create a piece of migratable code,
-as a            programmer,
-I want to       supply the code to be configured as migratable.
-``` js
-    var migratableCode = jsfly.wingify(someCode);
-    
-    migratableCode.run();   // It can be executed
-    migratableCode.fly();   // It can be migrated to another server
-    migratableCode.crash(); // It can be killed
-```  
-
-2. 
-In order to     run a program as autonomous code,
-as a            programmer,
-I want to       supply the code to be run autonomously.
-
-``` js
-    var autonomousCode = jsfly.wingify(someCode).run();
-```
-
-Although it is possible to explicitly fly and crash an autonomous piece of code, there is no need to do it because the code itself is supossed to request those methods autonomously.
-
-### b. Code's point of view: autonomous code
-
-1.
-In order to     fly to another server,
-as an           autonomous piece of code,
-I want to       ask to be migrated.
-``` js
-    var autonomousCode = jsfly.wingify(function (jsfly) {
-        // Request a runway for takeoff with the destination info
-        jsfly.runway(targetAirportInfo, function (authorized, authKey) {
-            if(authorized) { 
-                jsfly.fly(authKey);     // Request migration
-            }
-        });
-    }).run();
-```  
-
-2.
-In order to     stop running,
-as an           autonomous piece of code,
-I want to       ask to be stopped (i.e. crash).
-``` js
-    var autonomousCode = jsfly.wingify(function (jsfly) {
-        // Stop running the code when it reaches its life expectancy
-        setTimeout(function () {
-            jsfly.crash();              // Stop running
-        }, lifeSpan);
-    }).run();
-```
-
-### c. Module's point of view: manageable code
-
-1.
-In order to     stop running code and send it to another airport,
-as an           airport,
-I want to       authorize a piece of code to take off.
-``` js
-    jsfly.takeOff(migratableCode);
-```  
-
-2.
-In order to     start running code received from another airport,
-as an           airport,
-I want to       authorize a piece of code to land.
-``` js
-    var landedCode = jsfly.land(migratedCode);
-```
