@@ -51,11 +51,7 @@ A common feature of intelligent* species is their ability to move autonomously. 
 
 ### An analogy - Moles and burrows
 
-Arcade whack-a-mole games [(source)](http://sophlylaughing.blogspot.com/2012/07/nostalgic-1980s-toys.html) create the illusion of one or more moles moving from one burrow to another by showing and hiding each burrow's mole according to a given time sequence.
-
-<img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/whack_a_mole.jpeg?raw=true" width="435px">
-
-Digital whack-a-mole games like [this](http://www.cogniter.com/iphone-app-development-india.aspx) create the same illusion by simply displaying the moles in one or more burrows according to a given time sequence.
+Arcade whack-a-mole games [(like this one)](http://sophlylaughing.blogspot.com/2012/07/nostalgic-1980s-toys.html) create the illusion of one or more moles moving from one burrow to another by showing and hiding each burrow's mole according to a given time sequence. Similarly, digital whack-a-mole games like [Cogniter's](http://www.cogniter.com/iphone-app-development-india.aspx) iPhone app create the same illusion by simply displaying the moles in one or more burrows according to a given time sequence.
 
 <img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/molesSlow.gif?raw=true" width="435px">
 
@@ -64,9 +60,9 @@ Although it's not likely to find an application in which hitting a piece of code
 
 ## Examples
 
-1. Moving "Hello World!"
+### 1. Moving "Hello World!"
 
-2. Moving counter
+### 2. Moving counter
 
 ## Terminology
 
