@@ -43,12 +43,6 @@ Although this constraint is not a problem for conventional applications whose lo
 
 Then, what if in addition to running JavaScript code in many different environments, we could give it the ability to autonomously move from one environment to another while running?
 
-
-### Mobility and Artificial Intelligence
-
-A common feature of intelligent* species is their ability to move autonomously. Although the field of artificial intelligence covers much more than mobility issues, providing location awareness and mobility freedom to JavaScript programs could create new ways of making progress in this exciting field.
-
-
 ### An analogy - Moles and burrows
 
 Arcade whack-a-mole games [(like this one)](http://4.bp.blogspot.com/-gCEzW_Ddb60/T_X-hs5j5rI/AAAAAAAAO2A/29whhk5BJXs/s320/20060810_whack_a_mole.jpeg) create the illusion of one or more moles moving from one burrow to another by showing and hiding each burrow's mole according to a given time sequence. Similarly, digital whack-a-mole games like [Cogniter's](http://www.cogniter.com/iphone-app-development-india.aspx) iPhone app create the same illusion by simply displaying the moles in one or more burrows according to a given time sequence.
