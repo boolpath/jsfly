@@ -35,6 +35,20 @@ module.exports = {
 
 /*----------------------------------------------------------------------------*/
 
+/** Command line server setup
+ * Run jsfly.js from the command line and pass the port number as a parameter
+ * Type 'node jsfly portNumber'
+ */
+var serverPort = process.argv[2];
+if (serverPort) {
+    serverPort = parseInt(serverPort);
+    if (typeof serverPort === 'number') {
+        createAirport({ port: serverPort }, function () {
+            // console.log('JSFly airport created on port ' + serverPort);
+        });
+    }
+}
+
 /** Wingify === transforming a piece of code into migratable/autonomous code
  *          === to give it wings to fly from one server to another
  * @param {object} options - Describes the attributes of the code to be wingified
