@@ -46,16 +46,16 @@ Then, what if in addition to running JavaScript code in many different environme
 
 ### Mobility and Artificial Intelligence
 
-A common feature of most intelligent species is their ability to move autonomously. Although the field of artificial intelligence covers  much more than mobility issues, providing location awareness and mobility freedom to JavaScript programs could create new ways to make progress in this exciting field.
+A common feature of intelligent* species is their ability to move autonomously. Although the field of artificial intelligence covers much more than mobility issues, providing location awareness and mobility freedom to JavaScript programs could create new ways of making progress in this exciting field.
 
 
 ### An analogy - Moles and burrows
 
-Arcade whack-a-mole games create the illusion of one or more moles moving from one burrow to another by showing and hiding each burrow's mole according to a given time sequence.
+Arcade whack-a-mole games [(source)](http://sophlylaughing.blogspot.com/2012/07/nostalgic-1980s-toys.html) create the illusion of one or more moles moving from one burrow to another by showing and hiding each burrow's mole according to a given time sequence.
 
-<img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/mole0.png?raw=true" width="435px">
+<img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/whack_a_mole.jpeg?raw=true" width="435px">
 
-Digital whack-a-mole games like [this](http://) create the same illusion by simply displaying the moles in one or more burrows according to a given time sequence.
+Digital whack-a-mole games like [this](http://www.cogniter.com/iphone-app-development-india.aspx) create the same illusion by simply displaying the moles in one or more burrows according to a given time sequence.
 
 <img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/molesSlow.gif?raw=true" width="435px">
 
@@ -64,6 +64,9 @@ Although it's not likely to find an application in which hitting a piece of code
 
 ## Examples
 
+1. Moving "Hello World!"
+
+2. Moving counter
 
 ## Terminology
 
