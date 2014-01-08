@@ -77,7 +77,7 @@ function addPlane(wingified, options) {
  * @returns
  */
 function requestDeparture(callerID, targetOptions) {
-    console.log(callerID.split('_')[0] + ' wants to fly');
+    // console.log(callerID.split('_')[0] + ' wants to fly');
     if (typeof targetOptions === 'undefined' || 
         !validHost(targetOptions) ||
         !validPort(targetOptions)) {
@@ -88,7 +88,7 @@ function requestDeparture(callerID, targetOptions) {
 
     AIRPORT.runway.request(callerID, targetOptions, function (result) {
         if (result.connected) {
-            AIRPORT.runway.takeoff(AIRPORT.gates[callerID]);
+            AIRPORT.runway.takeoff(AIRPORT.gates[callerID], targetOptions.params);
         } else {
             console.log('Target airport is not available.');
         }
