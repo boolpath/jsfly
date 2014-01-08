@@ -20,7 +20,7 @@ var wingified = jsfly.wingify(function myNameIs(jsfly) {
 setTimeout(function migrateCode() {
     wingified.fly({ 
         host: 'localhost',  // optional for localhost
-        port: '3600' 
+        port: 3600 
     });
 }, 3100);
 

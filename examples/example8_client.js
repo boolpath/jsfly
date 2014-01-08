@@ -12,7 +12,7 @@ var wingified = jsfly.wingify(function myNameIs(jsfly) {
     // After 3.1 seconds, autonomously request to fly to another server
     setTimeout(function () {
         jsfly.fly({ 
-            port: '3600' 
+            port: 3600
         });
     }, 3100);
     // If the code cannot fly after 5.2 seconds, it crashes itself
