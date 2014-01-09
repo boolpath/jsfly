@@ -41,7 +41,7 @@ JavaScript is everywhere now. Browsers, servers, desktops, mobile devices, robot
 
 Although this constraint is not a problem for conventional applications whose location and allocation of resources are predefined and controlled authoritatively, it does create some barriers when considering different programming paradigms that would give applications the autonomy to decide where to run and look for less described, unexposed, unindexed data.
 
-Then, what if in addition to running JavaScript code in many different environments, we could give it the ability to autonomously move from one environment to another while running? JSFly can be used for writing code capable of migrating autonomously between Node.js servers, and exploring scenarios that would benefit from running code capable of moving from one place to another, such as locally querying unexposed, distributed databases, exploring the Web beyond HTML documents with non-HTTP crawlers and deploying propietary data processing scripts on demand.
+Then, what if in addition to running JavaScript code in many different environments, we could give it the ability to autonomously move from one environment to another while running? JSFly can be used for writing code capable of migrating autonomously between Node.js servers, and exploring scenarios that would benefit from running code capable of moving from one place to another, such as locally querying unexposed, distributed databases, and exploring the Web beyond HTML documents with non-HTTP crawlers.
 
 
 ## Examples
@@ -75,6 +75,12 @@ The result of running this JSPlane is displayed below:
 ![alt tag](https://github.com/jorgezaccaro/jsfly/blob/master/images/flyingHelloWorld.gif?raw=true)
 
 ### 2. Flying "Hello World!" grid
+
+Digital whack-a-mole games like [Cogniter's](http://www.cogniter.com/iphone-app-development-india.aspx) iPhone app create the illusion a mole moving from one burrow to another by displaying the mole in different burrows according to a given time sequence.
+
+<img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/molesSlow.gif?raw=true" width="435px">
+
+Similarly, JSFly creates the ilussion that flying code keeps running when traveling from one server to another by stopping the sent code and running the received code in a coordinated fashion. The console outputs and the corresponding code of a "Hello world!" logger that travels through a grid of servers are shown below.
 
 ``` js
 jsfly.wingify(function myNameIs(jsfly, params) {
