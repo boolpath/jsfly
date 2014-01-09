@@ -41,15 +41,7 @@ JavaScript is everywhere now. Browsers, servers, desktops, mobile devices, robot
 
 Although this constraint is not a problem for conventional applications whose location and allocation of resources are predefined and controlled authoritatively, it does create some barriers when considering different programming paradigms that would give applications the autonomy to decide where to run and look for less described, unexposed, unindexed data.
 
-Then, what if in addition to running JavaScript code in many different environments, we could give it the ability to autonomously move from one environment to another while running?
-
-### An analogy - Moles and burrows
-
-Arcade whack-a-mole games [(like this one)](http://4.bp.blogspot.com/-gCEzW_Ddb60/T_X-hs5j5rI/AAAAAAAAO2A/29whhk5BJXs/s320/20060810_whack_a_mole.jpeg) create the illusion of one or more moles moving from one burrow to another by showing and hiding each burrow's mole according to a given time sequence. Similarly, digital whack-a-mole games like [Cogniter's](http://www.cogniter.com/iphone-app-development-india.aspx) iPhone app create the same illusion by simply displaying the moles in one or more burrows according to a given time sequence.
-
-<img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/molesSlow.gif?raw=true" width="435px">
-
-Although it's not likely to find an application in which hitting a piece of code's "head" would be useful or even fun, it is possible to consider several scenarios that would benefit from running code capable of moving from one place to another, such as locally querying unexposed, distributed databases, exploring the Web beyond HTML documents with non-HTTP crawlers and deploying propietary data processing scripts on demand.
+Then, what if in addition to running JavaScript code in many different environments, we could give it the ability to autonomously move from one environment to another while running? JSFly can be used for writing code capable of migrating autonomously between Node.js servers, and exploring scenarios that would benefit from running code capable of moving from one place to another, such as locally querying unexposed, distributed databases, exploring the Web beyond HTML documents with non-HTTP crawlers and deploying propietary data processing scripts on demand.
 
 
 ## Examples
@@ -83,6 +75,25 @@ The result of running this JSPlane is displayed below:
 ![alt tag](https://github.com/jorgezaccaro/jsfly/blob/master/images/flyingHelloWorld.gif?raw=true)
 
 ### 2. Flying "Hello World!" grid
+
+``` js
+jsfly.wingify(function myNameIs(jsfly, params) {
+    setInterval(function () {
+        console.log('Hello world!');
+
+        if (params.servers.length > 0) {
+            jsfly.fly({
+                port: params.servers.pop(),
+                params: { 
+                    servers: params.servers
+                }
+            });
+        }
+    }, 1000);
+}).run({
+    servers: [8600, 4600, 6600, 7600, 2600, 9600, 3600, 5600, 1600]
+});
+```  
 
 ### 3. Flying counter
 
