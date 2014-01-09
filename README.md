@@ -56,6 +56,29 @@ Although it's not likely to find an application in which hitting a piece of code
 
 ### 1. Moving "Hello World!"
 
+JSFly servers (aka 'airports') can be created from the command line by providing a port number as a parameter:
+``` js
+node jsfly 3600
+```  
+
+JSFly clients (aka 'JSPlanes') are created by providing a function to the #wingify method. Then the jsfly#fly method can be used autonomously by the code in order to migrate to another server:
+``` js
+jsfly.wingify(function myNameIs(jsfly, params) {
+    // Hello world!
+    setInterval(function () {
+        console.log('Hello world!');
+    }, 1000);
+    // After 3.1 seconds, fly to another server
+    setTimeout(function () {
+        jsfly.fly({
+            port: params.targetPort
+        });
+    }, 3100);
+}).run({ targetPort: 3600 });
+```  
+
+The result of running this JSPlane is displayed below:
+
 ### 2. Moving counter
 
 ## Terminology
