@@ -82,6 +82,8 @@ Digital whack-a-mole games like [Cogniter's](http://www.cogniter.com/iphone-app-
 
 Similarly, JSFly creates the ilussion that flying code keeps running when traveling from one server to another by stopping the sent code and running the received code in a coordinated fashion. The console outputs and the corresponding code of a "Hello world!" logger that travels through a grid of servers are shown below.
 
+![alt tag](https://github.com/jorgezaccaro/jsfly/blob/master/images/helloWorldGrid.gif?raw=true)
+
 ``` js
 jsfly.wingify(function myNameIs(jsfly, params) {
     setInterval(function () {
