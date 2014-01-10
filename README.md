@@ -106,6 +106,28 @@ jsfly.wingify(function myNameIs(jsfly, params) {
 
 ### 3. Flying counter
 
+``` js
+jsfly.wingify(function myNameIs(jsfly, params) {
+    // Restore the count if the code is landing from another server
+    var count = (params) ? params.count || 0 : 0;
+    // After 1 second, print the current count and fly to the next server
+    setInterval(function () {
+        console.log(count++);
+        if (params.servers.length > 0) {
+            jsfly.fly({
+                port: params.servers.pop(),
+                // The current count must be sent as a parameter
+                params: {
+                    count: count,
+                    servers: params.servers
+                }
+            });
+        }
+    }, 1000);
+}).run({
+    servers: [8500, 4500, 6500, 7500, 2500, 9500, 3500, 5500, 1500]
+});
+```
 
 ## Terminology
 
