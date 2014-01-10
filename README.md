@@ -76,7 +76,7 @@ The result of running this JSPlane is displayed below:
 
 ### 2. Flying "Hello World!" grid
 
-Digital whack-a-mole games like [Cogniter's](http://www.cogniter.com/iphone-app-development-india.aspx) iPhone app create the illusion a mole moving from one burrow to another by displaying the mole in different burrows according to a given time sequence.
+Digital whack-a-mole games like [Cogniter's](http://www.cogniter.com/iphone-app-development-india.aspx) iPhone app create the illusion of a mole moving from one burrow to another by displaying the mole in different burrows according to a given time sequence.
 
 <img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/molesSlow.gif?raw=true" width="435px">
 
@@ -86,7 +86,8 @@ Similarly, JSFly creates the ilussion that flying code keeps running when travel
 jsfly.wingify(function myNameIs(jsfly, params) {
     setInterval(function () {
         console.log('Hello world!');
-
+    }, 500);
+    setTimeout(function () {
         if (params.servers.length > 0) {
             jsfly.fly({
                 port: params.servers.pop(),
@@ -95,9 +96,9 @@ jsfly.wingify(function myNameIs(jsfly, params) {
                 }
             });
         }
-    }, 1000);
+    }, 1600);
 }).run({
-    servers: [8600, 4600, 6600, 7600, 2600, 9600, 3600, 5600, 1600]
+    servers: [8500, 4500, 6500, 7500, 2500, 9500, 3500, 5500, 1500]
 });
 ```  
 
