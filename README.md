@@ -85,7 +85,7 @@ Similarly, JSFly creates the ilussion that flying code keeps running when travel
 ![alt tag](https://github.com/jorgezaccaro/jsfly/blob/master/images/helloWorldGrid.gif?raw=true)
 
 ``` js
-jsfly.wingify(function myNameIs(jsfly, params) {
+jsfly.wingify(function helloWorldGrid(jsfly, params) {
     setInterval(function () {
         console.log('Hello world!');
     }, 500);
@@ -98,7 +98,7 @@ jsfly.wingify(function myNameIs(jsfly, params) {
                 }
             });
         }
-    }, 1600);
+    }, 1501);
 }).run({
     servers: [8500, 4500, 6500, 7500, 2500, 9500, 3500, 5500, 1500]
 });
