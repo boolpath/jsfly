@@ -114,7 +114,7 @@ The console outputs and the corresponding code of a flying counter that keeps an
 ![alt tag](https://github.com/jorgezaccaro/jsfly/blob/master/images/flyingCounter.gif?raw=true)
 
 ``` js
-var flyingCounter = jsfly.wingify(function myNameIs(jsfly, params) {
+var flyingCounter = jsfly.wingify(function flyingCounter(jsfly, params) {
     /* Initialization stage */
     // Restore the count value sent from the previous server if applicable
     var count = (params) ? params.count || 0 : 0;
@@ -123,6 +123,7 @@ var flyingCounter = jsfly.wingify(function myNameIs(jsfly, params) {
         console.log(++count);
     }, 500);
     setTimeout(function () {
+        // Validate if there are more servers to visit
         if (params.servers.length > 0) {
             jsfly.fly({
                 port: params.servers.pop(),
@@ -137,6 +138,8 @@ var flyingCounter = jsfly.wingify(function myNameIs(jsfly, params) {
     }, 1501);
 });
 ```
+
+Wingified code does not have to be run immediately, nor to be run in order to be able to fly, so it can be stored in a variable for further deployment either in the same envirionment via the #run method, or to another environment via the #fly method. In this example, the flyingCounter variable stores a reference to the wingified flyingCounter function, whose #fly method is called later in order to send the code to start running on another server.
 
 ``` js
 flyingCounter.fly({
