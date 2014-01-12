@@ -73,7 +73,7 @@ The result of running this JSPlane is displayed below:
 
 ![alt tag](https://github.com/jorgezaccaro/jsfly/blob/master/images/flyingHelloWorld.gif?raw=true)
 
-### 2. Flying "Hello World!" grid
+### 2. Flying "Hello World!" grid - Passing parameters when running
 
 Digital whack-a-mole games like [Cogniter's](http://www.cogniter.com/iphone-app-development-india.aspx) iPhone app create the illusion of a mole moving from one burrow to another by displaying the mole in different burrows according to a given time sequence.
 
@@ -92,7 +92,7 @@ jsfly.wingify(function helloWorldGrid(jsfly, params) {
         jsfly.fly({
             port: params.servers.pop(),
             // The array of servers must be sent as a parameter so that the code
-            // knows where to go next when landing and running on another server
+            // knows where to fly next after landing and running on another server
             params: { 
                 servers: params.servers
             }
@@ -105,11 +105,18 @@ jsfly.wingify(function helloWorldGrid(jsfly, params) {
 
 In order to let the code be aware of the servers to visit, an object containing an array with the target server ports is passed as a parameter when running the code for the first time. Each time the jsfly#fly method is called, a target port is popped out of the params.servers array, and the array with the remaining ports is sent with the flying code so that it can be passed again as a parameter when landing and running the code on the destination server.
 
-### 3. Flying counter
+### 3. Flying counter - Keeping and restoring state when flying
+
+JSFly allows code to keep track of its state during flights between servers via the 'params' property of the options object supplied to jsfly#fly calls. Any state related variables that are intended to be used during the initialization stage of a JSPlane when landing on another server can be added to the 'params' object, and their values will be accessible via the 'params' parameter for the code to restore its state on landings.
+
+The console outputs and the corresponding code of a flying counter that keeps and prints its count when traveling through a grid of servers are shown below:
+
+![alt tag](https://github.com/jorgezaccaro/jsfly/blob/master/images/flyingCounter.gif?raw=true)
 
 ``` js
 var flyingCounter = jsfly.wingify(function myNameIs(jsfly, params) {
-    // Restore the count if the code is landing from another server
+    /* Initialization stage */
+    // Restore the count value sent from the previous server if applicable
     var count = (params) ? params.count || 0 : 0;
     
     setInterval(function () {
@@ -119,7 +126,8 @@ var flyingCounter = jsfly.wingify(function myNameIs(jsfly, params) {
         if (params.servers.length > 0) {
             jsfly.fly({
                 port: params.servers.pop(),
-                // The current count must be sent as a parameter
+                // The current count must be sent as a parameter so that the counter is
+                // initialized when the code lands and starts running on another server
                 params: {
                     count: count,
                     servers: params.servers
