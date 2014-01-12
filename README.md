@@ -23,7 +23,7 @@ var jsfly = require('jsfly');
 ``` js
     jsfly.createAirport(options, function (airport) {
         airport.on('landing', function (jsPlane) {
-            console.log(jsPlane.name + ": I'm here now!");
+            console.log(jsPlane.name + " running here now.");
         });
     });
 ```  
@@ -63,11 +63,10 @@ jsfly.wingify(function flyingHelloWorld(jsfly, params) {
     // After 3.1 seconds, fly to another server
     setTimeout(function () {
         jsfly.fly({
-            port: params.targetPort,
-            params: params
+            port: 3600
         });
     }, 3100);
-}).run({ targetPort: 3600 });
+}).run();
 ```  
 
 The result of running this JSPlane is displayed below:
