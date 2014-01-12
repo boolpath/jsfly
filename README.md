@@ -55,7 +55,7 @@ node jsfly 3600
 
 JSFly clients (aka 'JSPlanes') are created by providing a function to the #wingify method. Then the jsfly#fly method can be used autonomously by the code in order to migrate to another server:
 ``` js
-jsfly.wingify(function myNameIs(jsfly, params) {
+jsfly.wingify(function flyingHelloWorld(jsfly, params) {
     // Hello world!
     setInterval(function () {
         console.log('Hello world!');
