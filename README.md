@@ -103,6 +103,8 @@ jsfly.wingify(function helloWorldGrid(jsfly, params) {
 });
 ```  
 
+In order to let the code be aware of the servers to visit, an object containing an array with the target server ports is passed as a parameter when running the code for the first time. Note that the target port supplied to each jsfly#fly call is popped out of the params.servers array, and that the array with the remaining ports is also supplied so that it can be passed again as a parameter when landing and running the code on the destination server.
+
 ### 3. Flying counter
 
 ``` js
