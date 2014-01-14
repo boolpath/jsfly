@@ -125,7 +125,7 @@ function config(options) {
 }
 
 /** Creates a JSFly server
- * @param {string} options - Options like the port to listen to other airports and landing requests
+ * @param {object} options - Options like the port to listen to other airports and landing requests
  * @pararm {function} onReady - The function to be called when the airport is ready
  *                              An event emitter parameter will be passed when calling this function
  */
