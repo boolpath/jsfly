@@ -4,7 +4,8 @@
  * @property {object} airport - The module in charge of creating a JSFly server and handling migration requests
  * @property {object} airspace - The module in charge of preprocessing the code to intercept global calls
  * @property {object} globals - A set of allowed global calls like #fly, #crash, #setTimeout, #setInterval
- * @property {object} wingify - The module in charge of transforming regular code into migratable/autonomous code.
+ * @property {object} aircraft - The module in charge of transforming regular code into migratable/autonomous code
+ * @property {object} wingify - The module in charge of validating the parameters provided on calls to jsfly#wingify
  */
 var JSFly = module.JSFly = {
     config: {
@@ -17,7 +18,8 @@ var JSFly = module.JSFly = {
 
 JSFly.airport = require('./airport');
 JSFly.airspace = require('./airspace');
-JSFly.airspace.setup(); // 
+JSFly.airspace.setup();
+
 JSFly.globals = JSFly.airspace.getGlobals();
 JSFly.aircraft = require('./aircraft');
 JSFly.wingify = require('./wingify');
@@ -35,7 +37,7 @@ module.exports = {
 
 /*----------------------------------------------------------------------------*/
 
-/** Command line server setup
+/** Enable the creation of JSFly servers from the command line
  * Run jsfly.js from the command line and pass the port number as a parameter
  * Type 'node jsfly portNumber'
  */
@@ -48,6 +50,8 @@ if (serverPort) {
         });
     }
 }
+
+/*----------------------------------------------------------------------------*/
 
 /** Wingify === transforming a piece of code into migratable/autonomous code
  *          === to give it wings to fly from one server to another
@@ -71,7 +75,7 @@ function wingify(options, code) {
             wingified = wingifiedTemp;
         }
     } catch (e) {
-        handleExceptions(e); console.log('handling');
+        handleExceptions(e);
     } finally {
         // If the code could not be wingified, return a dummy object
         if (typeof wingified === 'undefined') {
@@ -84,28 +88,27 @@ function wingify(options, code) {
 // An object to return every time a piece of code cannot be wingified
 var wingifiedDummy = {
     canFly: false,
-    run: function () {
+    run: function run() {
         console.log('Supplied code could not be wingified, so it cannot run.');
     },
-    fly: function () {
+    fly: function fly() {
         console.log('Supplied code could not be wingified, so it cannot fly.');
     },
-    crash: function () {
+    crash: function crash() {
         console.log('Supplied code could not be wingified, so it cannot crash.');
     }
 }
 
 /** Handles exceptions thrown when trying to wingify a piece of code
- * @param {object} e - Describes the exception thrown
- * @returns
+ * @param {object} e - Describes the thrown exception
+ * @throws {object} e - The exception if it's a TypeError exception
  */
 function handleExceptions(e) {
     if (e.name === 'TypeError') {
         throw e;
     }
-    console.log('ERROR: ', e.name+' -', e.message);
+    console.log('ERROR: ', e.name + ' -', e.message);
 }
-
 
 /** Configures the default options to use when wingifying code
  * @param {object} options - The options to be configured
@@ -121,12 +124,10 @@ function config(options) {
     return configured;
 }
 
-
 /** Creates a JSFly server
- * @param {string} options - Options like the port to listen on to other airports
+ * @param {string} options - Options like the port to listen to other airports and landing requests
  * @pararm {function} onReady - The function to be called when the airport is ready
  *                              An event emitter parameter will be passed when calling this function
- * @returns 
  */
 function createAirport(options, onReady) {
     JSFly.airport.create(options, onReady);
