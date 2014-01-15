@@ -3,12 +3,12 @@ module.JSFly = JSFly;
 /*----------------------------------------------------------------------------*/
 /* NODE MODULES */
 var exceptions = require('../utils/exceptions');
+
 /** LOCAL OBJECT 
- * @property {} - 
+ * @property {function} validate - Validates the code to be wingified according to the specified options
  */
 var WINGIFY = {
-    validate: validate,
-    aircraft: require('../aircraft')
+    validate: validate
 };
 
 /** MODULE INTERFACE
@@ -16,9 +16,7 @@ var WINGIFY = {
  */
 module.exports = wingify;
 
-
 /*----------------------------------------------------------------------------*/
-
 
 /** Wingify === transforming a piece of code into migratable/autonomous code
  *          === to give it wings to fly from one server to another
@@ -30,26 +28,27 @@ function wingify(options, code) {
     // Validate the supplied code and options and return if invalid
     if (!WINGIFY.validate(options, code)) { return; }
     // Create a migratable/autonomous piece of code
-    var wingified = WINGIFY.aircraft.create(options, code);
-
+    var wingified = JSFly.aircraft.create(options, code);
+    
     return wingified;
 }
-
 
 /** Validates the code to be wingified according to the specified options
  * @param {object} options - Describes the attributes of the code to be wingified
  * @param {function} code - The code to be wingified
- * @returns {boolean}
+ * @returns {boolean} valid - True if the supplied code and options are valid
  */
 function validate(options, code) {
     var valid = true, codeName;
 
+    // Check if a function was supplied
     if (!code) {
         throw exceptions.throwNew('no code'); 
     } else if (typeof code !== 'function') { 
         throw exceptions.throwNew('no function'); 
     }
 
+    // Check if the supplied code has a name
     codeName = code.name || code.tag || options.name;
     if (typeof codeName === 'undefined') {
         throw exceptions.throwNew('unnamed function'); 
@@ -59,6 +58,7 @@ function validate(options, code) {
         throw exceptions.throwNew('unnamed function'); 
     }
 
+    // Check the specified type of supplied code
     if (typeof options !== 'object') {
         throw exceptions.throwNew('no options');
     } else if (typeof options.type === 'undefined') {
