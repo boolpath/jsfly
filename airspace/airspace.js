@@ -4,10 +4,11 @@
 var domain = require('domain');
 var exceptions = require('../utils/exceptions');
 
-/** LOCAL OBJECT 
- * @property {object} calls - [Array] Contains the methods to be prepended with 'jsfly.' during preprocessing
- * @method {function} prependCalls - Prepends the global calls in the code to be wingified according to the 'calls' array
+/** LOCAL OBJECT
+ * @property {object} globals - The module that defines the global calls that are accessible to JSFly code
  * @property {object} domains - Contains Node domains to catch exceptions/errors thrown when running wingified code
+ * @property {object} calls - [Array] Contains the methods to prepend with 'jsfly.' during preprocessing
+ * @method {function} prependCalls - Prepends the global calls in the code to be wingified according to the 'calls' array
  * @property {object} timeouts - Contains the timeout handlers grouped by the functions that created them
  * @property {object} intervals - Contains the interval handlers grouped by the functions that created them
  */
@@ -47,7 +48,6 @@ module.exports = {
  *  Overrides globals like setTimeout to intercept calls to grant permissions
  *  and to avoid redefinitions by wingified code
  * @param {object} callsToPrepend - Optional array specifying the methods to be prepended with 'jsfly.' during preprocessing 
- * @returns
  */
 function setup(callsToPrepend) {
     if (callsToPrepend) {
@@ -72,6 +72,7 @@ function preprocess(code) {
     
     return processedCode;
 }
+
 /** Prepends global method calls with 'jsfly.'
  * @param {function} rawFunction - The function to be preprocessed
  * @returns {string} stringFunction - A string version of the function with prepended calls
@@ -83,8 +84,9 @@ function prependCalls(rawFunction) {
     
     var stringFunction = rawFunction.toString().trim();
     AIRSPACE.calls.forEach(function (call) {
-        stringFunction = stringFunction.replace(new RegExp(call, 'g'), 'jsfly.'+call);
+        stringFunction = stringFunction.replace(new RegExp(call, 'g'), 'jsfly.' + call);
     });
+    
     return stringFunction;
 }
 
