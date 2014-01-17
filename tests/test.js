@@ -1,4 +1,4 @@
-var jsfly = require('./jsfly'),
+var jsfly = require('../jsfly'),
     assert = require('assert');
 
 describe('jsfly-api', function () {
