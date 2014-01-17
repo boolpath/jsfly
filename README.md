@@ -1,5 +1,5 @@
 # What if JavaScript could fly...?
-![alt tag](https://github.com/jorgezaccaro/jsfly/blob/master/jsflyLogo.png?raw=true)
+![alt tag](https://github.com/jorgezaccaro/jsfly/blob/master/images/jsflyLogo.png?raw=true)
 
 ### Write code capable of migrating autonomously between Node.js servers using JSFly.  
 
