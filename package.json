@@ -1,4 +1,15 @@
 {
-    "name": "JSFly",
+    "name": "jsfly",
+    "description": "Autonomous code migration between Node.js servers.",
+    "homepage": "https://github.com/jorgezaccaro/jsfly/#what-if-javascript-could-fly",
+    "author": {
+        "name": "Jorge Zaccaro",
+        "email": "jorgezaccaro@gmail.com",
+        "url": "https://github.com/jorgezaccaro"
+    },
+    "version": "0.0.1",
+    "license": "MIT",
+    "dependencies": {},
+    "keywords": ["fly", "autonomous", "migration"],
     "main": "jsfly.js"
 }
