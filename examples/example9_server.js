@@ -1,4 +1,4 @@
-// CODE THAT IS MIGRATED FROM ANOTHER SERVER
+// AUTONOMOUS CODE THAT FLIES FROM ANOTHER SERVER
 // JSFly offers the #createAirport method that creates a server
 // that is capable of receiving code from another server and running it
 var jsfly = require('../jsfly');
@@ -26,6 +26,7 @@ myNameIs is running here now!
 Hello world!       // Every 1 second
 Hello world!
 Hello world!
+Same airport:  Departure and target airport are the same. Denied permission to fly.
 Hello world!
 Hello world!
 Good bye world!    // After 5.2 seconds 
