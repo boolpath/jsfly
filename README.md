@@ -6,6 +6,9 @@
 
 ## Usage
 ``` js
+npm install jsfly
+```
+``` js
 var jsfly = require('jsfly');
 ```
 
@@ -163,3 +166,7 @@ flyingCounter.fly({
    **Take off:** Stop running a program that will fly to another airport.  
    **Fly:** Travel from one airport to another airport.  
    **Land:** Start running a program that comes from another airport.  
+
+## License
+
+MIT
