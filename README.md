@@ -77,7 +77,7 @@ The result of running this JSPlane is displayed below:
 
 Digital whack-a-mole games like [Cogniter's](http://www.cogniter.com/iphone-app-development-india.aspx) iPhone app create the illusion of a mole moving from one burrow to another by displaying the mole in different burrows according to a given time sequence.
 
-<img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/molesSlow.gif?raw=true" width="435px">
+<img src="https://github.com/jorgezaccaro/jsfly/blob/master/images/moles.gif?raw=true" width="435px">
 
 Similarly, JSFly creates the ilussion that flying code keeps running when traveling from one server to another by stopping the sent code and running the received code in a coordinated fashion. The console outputs and the corresponding code of a "Hello world!" logger that travels through a grid of servers are shown below.
 
